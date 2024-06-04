@@ -9,16 +9,37 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@emotion/cache": "^11.11.0",
+    "@emotion/react": "^11.11.4",
+    "@emotion/styled": "^11.11.5",
+    "@fontsource/roboto": "^5.0.13",
+    "@mui/icons-material": "^5.15.19",
+    "@mui/material": "^5.15.19",
+    "@mui/material-nextjs": "^5.15.11",
+    "@react-three/drei": "^9.106.0",
+    "@react-three/fiber": "^8.16.7",
+    "next": "14.2.3",
     "react": "^18",
     "react-dom": "^18",
-    "next": "14.2.3"
+    "textalive-app-api": "^0.4.0",
+    "three": "^0.165.0"
   },
   "devDependencies": {
-    "typescript": "^5",
+    "@next/eslint-plugin-next": "^14.2.3",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
+    "@types/three": "^0.165.0",
+    "@typescript-eslint/eslint-plugin": "^7.11.0",
+    "@typescript-eslint/parser": "^7.11.0",
+    "babel-plugin-direct-import": "^1.0.0",
     "eslint": "^8",
-    "eslint-config-next": "14.2.3"
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-import": "^2.29.1",
+    "eslint-plugin-react": "^7.34.2",
+    "eslint-plugin-react-hooks": "^4.6.2",
+    "eslint-plugin-unicorn": "^53.0.0",
+    "prettier": "^3.3.0",
+    "typescript": "^5"
   }
 }
