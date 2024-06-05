@@ -2,21 +2,24 @@
 
 import { useEffect, useState } from 'react';
 import {
-  IPlayerApp,
   Player,
   PlayerAppListener,
   PlayerEventListener,
 } from 'textalive-app-api';
 
+import { TextAlivePlayerControls } from './TextAlivePlayerControls';
+
 const SONG_URL = 'https://piapro.jp/t/xEA7/20240202002556';
 
 export function TextAlivePlayer(): JSX.Element {
   const [player, setPlayer] = useState<Player>();
-  const [app, setApp] = useState<IPlayerApp>();
-  // const [word, setWord] = useState<string>('');
+  const [loading, setLoading] = useState<boolean>(true);
+  const [text, setText] = useState<string>('');
 
   useEffect(() => {
-    const player = new Player({ app: { token: 'ihuwWjJtf00zXY5a' } });
+    const player = new Player({
+      app: { token: 'ihuwWjJtf00zXY5a' },
+    });
 
     const playerAppListener: PlayerAppListener = {
       onAppReady: async app => {
@@ -33,25 +36,30 @@ export function TextAlivePlayer(): JSX.Element {
               lyricDiffId: 13967,
             },
           });
-
-          setApp(app);
         }
       },
     };
 
     const playerEventListener: PlayerEventListener = {
-      onVideoReady: video => {
-        let w = video.firstWord;
-        console.log(w.text);
+      onTimerReady: () => {
+        let current = player.video.firstWord;
+        let hasNoNext = false;
 
-        // while (w) {
-        //   w.animate = (now, unit) => {
-        //     if (unit.contains(now)) {
-        //       setWord(w.text);
-        //     }
-        //   };
-        //   w = w.next;
-        // }
+        current.animate = now => {
+          now += 50;
+          if (current.startTime < now) {
+            setText(current.text);
+            current = current.next ?? ((hasNoNext = true), current);
+          } else if (
+            current.previous.endTime < now ||
+            (hasNoNext && current.endTime < now)
+          ) {
+            setText('');
+          }
+        };
+
+        setPlayer(player);
+        setLoading(false);
       },
     };
 
@@ -61,7 +69,6 @@ export function TextAlivePlayer(): JSX.Element {
     };
 
     player.addListener(listener);
-    setPlayer(player);
 
     return () => {
       player.removeListener(listener);
@@ -70,11 +77,8 @@ export function TextAlivePlayer(): JSX.Element {
 
   return (
     <>
-      {player && app ? (
-        <p>{`Ready: ${player.data.song.name}`}</p>
-      ) : (
-        <p>Loading</p>
-      )}
+      <p>{text}</p>
+      <TextAlivePlayerControls {...{ player, loading }} />
     </>
   );
 }
