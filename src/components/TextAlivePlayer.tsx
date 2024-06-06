@@ -10,11 +10,13 @@ import {
 import { TextAlivePlayerControls } from './TextAlivePlayerControls';
 
 const SONG_URL = 'https://piapro.jp/t/xEA7/20240202002556';
+const TIME_DELTA = 50;
 
 export function TextAlivePlayer(): JSX.Element {
   const [player, setPlayer] = useState<Player>();
   const [loading, setLoading] = useState<boolean>(true);
   const [text, setText] = useState<string>('');
+  const [progress, setProgress] = useState<number>(0);
 
   useEffect(() => {
     const player = new Player({
@@ -42,24 +44,20 @@ export function TextAlivePlayer(): JSX.Element {
 
     const playerEventListener: PlayerEventListener = {
       onTimerReady: () => {
-        let current = player.video.firstWord;
-        let hasNoNext = false;
-
-        current.animate = now => {
-          now += 50;
-          if (current.startTime < now) {
-            setText(current.text);
-            current = current.next ?? ((hasNoNext = true), current);
-          } else if (
-            current.previous.endTime < now ||
-            (hasNoNext && current.endTime < now)
-          ) {
-            setText('');
-          }
-        };
-
         setPlayer(player);
         setLoading(false);
+      },
+      onTimeUpdate: now => {
+        setProgress((now / player.video.duration) * 100);
+
+        const withDelata = now + TIME_DELTA;
+        const current = player.video.findWord(withDelata + TIME_DELTA);
+
+        if (current === null) {
+          setText('');
+        } else if (current.startTime < withDelata) {
+          setText(current.text);
+        }
       },
     };
 
@@ -78,7 +76,9 @@ export function TextAlivePlayer(): JSX.Element {
   return (
     <>
       <p>{text}</p>
-      <TextAlivePlayerControls {...{ player, loading }} />
+      <TextAlivePlayerControls
+        {...{ player, loading, progress, setProgress }}
+      />
     </>
   );
 }

@@ -6,35 +6,52 @@ import {
   Box,
   CircularProgress,
   IconButton,
+  Slider,
   Toolbar,
 } from '@mui/material';
-import { useCallback, useState } from 'react';
+import { Dispatch, SetStateAction, useCallback, useState } from 'react';
 import { Player } from 'textalive-app-api';
 
 type TextAlivePlayerControlsProps = {
   player?: Player;
   loading: boolean;
+  progress: number;
+  setProgress: Dispatch<SetStateAction<number>>;
 };
 
 export function TextAlivePlayerControls({
   player,
   loading,
+  progress,
+  setProgress,
 }: TextAlivePlayerControlsProps): JSX.Element {
-  const [isPlaying, setIsPlaying] = useState<boolean>(false);
+  const [playing, setPlaying] = useState<boolean>(false);
 
   const handleClick = useCallback(() => {
     if (!player) return;
 
     if (!player.isPlaying) {
       player.requestPlay();
-      setIsPlaying(true);
+      setPlaying(true);
     }
 
     if (player.isPlaying) {
       player.requestPause();
-      setIsPlaying(false);
+      setPlaying(false);
     }
   }, [player]);
+
+  const handleChangeProgress = useCallback(
+    (e: Event, value: number | number[]) => {
+      if (!player) return;
+
+      setProgress(value as number);
+      player.requestMediaSeek(
+        player.video.duration * ((value as number) / 100)
+      );
+    },
+    [player, setProgress]
+  );
 
   return (
     <Box>
@@ -48,11 +65,21 @@ export function TextAlivePlayerControls({
               disabled={loading}
               color="inherit"
               onClick={handleClick}
-              sx={{ mr: 1 }}
+              sx={{ mr: 2 }}
             >
-              {!isPlaying ? <PlayArrowRounded /> : <StopRounded />}
+              {!playing || progress === 100 ? (
+                <PlayArrowRounded />
+              ) : (
+                <StopRounded />
+              )}
             </IconButton>
           </Box>
+          <Slider
+            disabled={loading}
+            value={progress}
+            sx={{ color: '#fff', mr: 1 }}
+            onChange={handleChangeProgress}
+          />
         </Toolbar>
       </AppBar>
     </Box>
