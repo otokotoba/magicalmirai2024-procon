@@ -34,14 +34,12 @@ export function TextAlivePlayerControls({
   const handleClick = useCallback(() => {
     if (!player) return;
 
-    if (!player.isPlaying) {
-      player.requestPlay();
-      setPlaying(true);
-    }
-
     if (player.isPlaying) {
       player.requestPause();
       setPlaying(false);
+    } else {
+      player.requestPlay();
+      setPlaying(true);
     }
   }, [player]);
 
