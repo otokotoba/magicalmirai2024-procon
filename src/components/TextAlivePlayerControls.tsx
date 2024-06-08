@@ -80,9 +80,7 @@ export function TextAlivePlayerControls(): JSX.Element {
               sx={{
                 color: '#fff',
                 ml: 1,
-                '& .MuiSlider-rail': {
-                  width: 'calc(100% - 8px)',
-                },
+                width: 'calc(100% - 16px)',
               }}
               size="small"
               onChange={handleChangeProgress}
