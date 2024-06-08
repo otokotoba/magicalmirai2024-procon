@@ -7,6 +7,8 @@ import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
 
+import { AppStoreProvider } from '@/components/AppStoreProvider';
+
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
@@ -22,7 +24,9 @@ export default function RootLayout({
   return (
     <html lang="ja">
       <AppRouterCacheProvider>
-        <body className={inter.className}>{children}</body>
+        <body className={inter.className}>
+          <AppStoreProvider>{children}</AppStoreProvider>
+        </body>
       </AppRouterCacheProvider>
     </html>
   );

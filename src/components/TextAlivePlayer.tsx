@@ -1,22 +1,23 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import {
   Player,
   PlayerAppListener,
   PlayerEventListener,
 } from 'textalive-app-api';
 
+import { useAppStore } from './AppStoreProvider';
 import { TextAlivePlayerControls } from './TextAlivePlayerControls';
 
 const SONG_URL = 'https://piapro.jp/t/xEA7/20240202002556';
 const TIME_DELTA = 50;
 
 export function TextAlivePlayer(): JSX.Element {
-  const [player, setPlayer] = useState<Player>();
-  const [loading, setLoading] = useState<boolean>(true);
-  const [text, setText] = useState<string>('');
-  const [progress, setProgress] = useState<number>(0);
+  const setPlayer = useAppStore(state => state.setPlayer);
+  const setLoading = useAppStore(state => state.setLoading);
+  const [text, setText] = useAppStore(state => [state.text, state.setText]);
+  const setProgress = useAppStore(state => state.setProgress);
 
   useEffect(() => {
     const player = new Player({
@@ -71,14 +72,12 @@ export function TextAlivePlayer(): JSX.Element {
     return () => {
       player.removeListener(listener);
     };
-  }, []);
+  }, [setLoading, setPlayer, setProgress, setText]);
 
   return (
     <>
       <p>{text}</p>
-      <TextAlivePlayerControls
-        {...{ player, loading, progress, setProgress }}
-      />
+      <TextAlivePlayerControls />
     </>
   );
 }

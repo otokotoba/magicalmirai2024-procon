@@ -13,22 +13,18 @@ import {
   Tooltip,
   Typography,
 } from '@mui/material';
-import { Dispatch, SetStateAction, useCallback, useState } from 'react';
-import { Player } from 'textalive-app-api';
+import { useCallback, useState } from 'react';
 
-type TextAlivePlayerControlsProps = {
-  player?: Player;
-  loading: boolean;
-  progress: number;
-  setProgress: Dispatch<SetStateAction<number>>;
-};
+import { useAppStore } from './AppStoreProvider';
 
-export function TextAlivePlayerControls({
-  player,
-  loading,
-  progress,
-  setProgress,
-}: TextAlivePlayerControlsProps): JSX.Element {
+export function TextAlivePlayerControls(): JSX.Element {
+  const player = useAppStore(state => state.player);
+  const loading = useAppStore(state => state.loading);
+  const [progress, setProgress] = useAppStore(state => [
+    state.progress,
+    state.setProgress,
+  ]);
+
   const [playing, setPlaying] = useState<boolean>(false);
 
   const handleClick = useCallback(() => {
