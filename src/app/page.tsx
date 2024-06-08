@@ -1,14 +1,25 @@
 'use client';
 
-import styles from './page.module.css';
+import { Box } from '@mui/material';
 
 import { TextAlivePlayer } from '@/components/TextAlivePlayer';
 
 export default function Home(): JSX.Element {
   return (
-    <main className={styles.main}>
+    <Box
+      component="main"
+      sx={{
+        margin: 0,
+        display: 'flex',
+        flexDirection: ' column',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        minHeight: '100vh',
+      }}
+    >
       <h1>Hello, World</h1>
       <TextAlivePlayer />
-    </main>
+      <Box id="media" sx={{ display: 'none' }} />
+    </Box>
   );
 }

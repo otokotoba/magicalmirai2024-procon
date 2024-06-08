@@ -70,64 +70,62 @@ export function TextAlivePlayerControls(): JSX.Element {
   );
 
   return (
-    <Box>
-      <AppBar position="fixed" color="info" sx={{ top: 'auto', buttom: 0 }}>
-        <Toolbar sx={{ py: 1 }} variant="dense">
-          <Grid container alignItems="center">
-            <Grid item xs={12}>
-              <Slider
-                disabled={loading}
-                value={progress}
-                sx={{
-                  color: '#fff',
-                  ml: 1,
-                  '& .MuiSlider-rail': {
-                    width: 'calc(100% - 8px)',
-                  },
-                }}
-                size="small"
-                onChange={handleChangeProgress}
-                slots={{
-                  valueLabel: SliderValueLabel,
-                }}
-                valueLabelDisplay="auto"
-                valueLabelFormat={formatSliderValue}
-              />
-            </Grid>
-
-            <Grid item>
-              <Box sx={{ position: 'relative' }}>
-                {loading && (
-                  <CircularProgress
-                    color="inherit"
-                    sx={{ position: 'absolute' }}
-                  />
-                )}
-                <IconButton
-                  disabled={loading}
-                  color="inherit"
-                  onClick={handleClick}
-                >
-                  {!playing || progress === 100 ? (
-                    <PlayArrowRounded />
-                  ) : (
-                    <StopRounded />
-                  )}
-                </IconButton>
-              </Box>
-            </Grid>
-
-            <Grid item mx={1}>
-              {!loading && (
-                <Typography variant="caption">
-                  {`${formatSliderValue(progress)} / ${formatSliderValue(100)}`}
-                </Typography>
-              )}
-            </Grid>
+    <AppBar color="info" sx={{ position: 'static' }}>
+      <Toolbar sx={{ py: 1 }} variant="dense">
+        <Grid container alignItems="center">
+          <Grid item xs={12}>
+            <Slider
+              disabled={loading}
+              value={progress}
+              sx={{
+                color: '#fff',
+                ml: 1,
+                '& .MuiSlider-rail': {
+                  width: 'calc(100% - 8px)',
+                },
+              }}
+              size="small"
+              onChange={handleChangeProgress}
+              slots={{
+                valueLabel: SliderValueLabel,
+              }}
+              valueLabelDisplay="auto"
+              valueLabelFormat={formatSliderValue}
+            />
           </Grid>
-        </Toolbar>
-      </AppBar>
-    </Box>
+
+          <Grid item>
+            <Box sx={{ position: 'relative' }}>
+              {loading && (
+                <CircularProgress
+                  color="inherit"
+                  sx={{ position: 'absolute' }}
+                />
+              )}
+              <IconButton
+                disabled={loading}
+                color="inherit"
+                onClick={handleClick}
+              >
+                {!playing || progress === 100 ? (
+                  <PlayArrowRounded />
+                ) : (
+                  <StopRounded />
+                )}
+              </IconButton>
+            </Box>
+          </Grid>
+
+          <Grid item mx={1}>
+            {!loading && (
+              <Typography variant="caption">
+                {`${formatSliderValue(progress)} / ${formatSliderValue(100)}`}
+              </Typography>
+            )}
+          </Grid>
+        </Grid>
+      </Toolbar>
+    </AppBar>
   );
 }
 

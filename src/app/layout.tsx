@@ -1,7 +1,7 @@
+import { CssBaseline } from '@mui/material';
 import { AppRouterCacheProvider } from '@mui/material-nextjs/v13-appRouter';
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
-import './globals.css';
 import '@fontsource/roboto/300.css';
 import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/500.css';
@@ -23,11 +23,13 @@ export default function RootLayout({
 }>): JSX.Element {
   return (
     <html lang="ja">
-      <AppRouterCacheProvider>
-        <body className={inter.className}>
-          <AppStoreProvider>{children}</AppStoreProvider>
-        </body>
-      </AppRouterCacheProvider>
+      <CssBaseline>
+        <AppRouterCacheProvider>
+          <body className={inter.className}>
+            <AppStoreProvider>{children}</AppStoreProvider>
+          </body>
+        </AppRouterCacheProvider>
+      </CssBaseline>
     </html>
   );
 }

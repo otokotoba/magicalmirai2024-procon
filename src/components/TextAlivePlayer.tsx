@@ -22,6 +22,7 @@ export function TextAlivePlayer(): JSX.Element {
   useEffect(() => {
     const player = new Player({
       app: { token: 'ihuwWjJtf00zXY5a' },
+      mediaElement: document.getElementById('media') as HTMLElement,
     });
 
     const playerAppListener: PlayerAppListener = {
