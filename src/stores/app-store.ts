@@ -7,6 +7,7 @@ export type AppState = {
   loading: boolean;
   text: string;
   progress: number;
+  showLyrics: boolean;
 };
 
 export type AppActions = {
@@ -14,6 +15,7 @@ export type AppActions = {
   setLoading: (loading: AppState['loading']) => void;
   setText: (text: AppState['text']) => void;
   setProgress: (progress: AppState['progress']) => void;
+  setShowLyrics: (showLyrics: AppState['showLyrics']) => void;
 };
 
 export type AppStore = AppState & AppActions;
@@ -22,6 +24,7 @@ export const defaultInitState: AppState = {
   loading: true,
   text: '',
   progress: 0,
+  showLyrics: true,
 };
 
 export const createAppStore = (
@@ -33,5 +36,6 @@ export const createAppStore = (
     setLoading: loading => set(() => ({ loading })),
     setText: text => set(() => ({ text })),
     setProgress: progress => set(() => ({ progress })),
+    setShowLyrics: showLyrics => set(() => ({ showLyrics })),
   }));
 };

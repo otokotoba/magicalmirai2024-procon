@@ -12,11 +12,12 @@ const CaptionContainer = styled(Box)<BoxProps>(({ theme }) => ({
 
 export function TextAlivePlayerScreen(): JSX.Element {
   const text = useAppStore(state => state.text);
+  const showLyrics = useAppStore(state => state.showLyrics);
 
   return (
     <Box sx={{ height: '100%', position: 'relative' }}>
       <Box sx={{ width: '100%', height: '100%', background: '#bdbdbd' }} />
-      {text !== '' && (
+      {showLyrics && text !== '' && (
         <CaptionContainer
           sx={{
             position: 'absolute',

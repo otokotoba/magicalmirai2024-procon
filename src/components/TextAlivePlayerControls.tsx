@@ -1,6 +1,11 @@
 'use client';
 
-import { PlayArrowRounded, StopRounded } from '@mui/icons-material';
+import {
+  PlayArrowRounded,
+  StopRounded,
+  Subtitles,
+  SubtitlesOff,
+} from '@mui/icons-material';
 import {
   AppBar,
   Box,
@@ -24,10 +29,14 @@ export function TextAlivePlayerControls(): JSX.Element {
     state.progress,
     state.setProgress,
   ]);
+  const [showLyrics, setShowLyrics] = useAppStore(state => [
+    state.showLyrics,
+    state.setShowLyrics,
+  ]);
 
   const [playing, setPlaying] = useState<boolean>(false);
 
-  const handleClick = useCallback(() => {
+  const handlePlay = useCallback(() => {
     if (!player) return;
 
     if (player.isPlaying) {
@@ -69,6 +78,11 @@ export function TextAlivePlayerControls(): JSX.Element {
     [player]
   );
 
+  const handleShowLirycs = useCallback(() => {
+    if (showLyrics) setShowLyrics(false);
+    else setShowLyrics(true);
+  }, [setShowLyrics, showLyrics]);
+
   return (
     <AppBar color="info" sx={{ position: 'static' }}>
       <Toolbar sx={{ py: 1 }} variant="dense">
@@ -103,7 +117,7 @@ export function TextAlivePlayerControls(): JSX.Element {
               <IconButton
                 disabled={loading}
                 color="inherit"
-                onClick={handleClick}
+                onClick={handlePlay}
               >
                 {!playing || progress === 100 ? (
                   <PlayArrowRounded />
@@ -112,6 +126,16 @@ export function TextAlivePlayerControls(): JSX.Element {
                 )}
               </IconButton>
             </Box>
+          </Grid>
+
+          <Grid item>
+            <IconButton
+              disabled={loading}
+              color="inherit"
+              onClick={handleShowLirycs}
+            >
+              {showLyrics ? <SubtitlesOff /> : <Subtitles />}
+            </IconButton>
           </Grid>
 
           <Grid item mx={1}>
