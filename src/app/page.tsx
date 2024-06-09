@@ -10,14 +10,10 @@ export default function Home(): JSX.Element {
       component="main"
       sx={{
         margin: 0,
-        display: 'flex',
-        flexDirection: ' column',
-        justifyContent: 'space-between',
         alignItems: 'center',
-        minHeight: '100vh',
+        height: '100vh',
       }}
     >
-      <h1>Hello, World</h1>
       <TextAlivePlayer />
       <Box id="media" sx={{ display: 'none' }} />
     </Box>

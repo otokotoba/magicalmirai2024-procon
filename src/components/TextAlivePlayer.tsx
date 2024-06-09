@@ -1,5 +1,6 @@
 'use client';
 
+import { Box, Stack } from '@mui/material';
 import { useEffect } from 'react';
 import {
   Player,
@@ -9,6 +10,7 @@ import {
 
 import { useAppStore } from './AppStoreProvider';
 import { TextAlivePlayerControls } from './TextAlivePlayerControls';
+import { TextAlivePlayerScreen } from './TextAlivePlayerScreen';
 
 const SONG_URL = 'https://piapro.jp/t/xEA7/20240202002556';
 const TIME_DELTA = 50;
@@ -16,7 +18,7 @@ const TIME_DELTA = 50;
 export function TextAlivePlayer(): JSX.Element {
   const setPlayer = useAppStore(state => state.setPlayer);
   const setLoading = useAppStore(state => state.setLoading);
-  const [text, setText] = useAppStore(state => [state.text, state.setText]);
+  const setText = useAppStore(state => state.setText);
   const setProgress = useAppStore(state => state.setProgress);
 
   useEffect(() => {
@@ -76,9 +78,13 @@ export function TextAlivePlayer(): JSX.Element {
   }, [setLoading, setPlayer, setProgress, setText]);
 
   return (
-    <>
-      <p>{text}</p>
-      <TextAlivePlayerControls />
-    </>
+    <Stack sx={{ height: '100%' }}>
+      <Box sx={{ flexGrow: 1 }}>
+        <TextAlivePlayerScreen />
+      </Box>
+      <Box>
+        <TextAlivePlayerControls />
+      </Box>
+    </Stack>
   );
 }
