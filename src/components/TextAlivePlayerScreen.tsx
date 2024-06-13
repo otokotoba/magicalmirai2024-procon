@@ -1,6 +1,7 @@
 import { Box, BoxProps, styled, Typography } from '@mui/material';
 
 import { useAppStore } from './AppStoreProvider';
+import { TextAlivePlayerGame } from './TextAlivePlayerGame';
 
 const CaptionContainer = styled(Box)<BoxProps>(({ theme }) => ({
   backgroundColor: theme.palette.grey[900],
@@ -16,7 +17,12 @@ export function TextAlivePlayerScreen(): JSX.Element {
 
   return (
     <Box sx={{ height: '100%', position: 'relative' }}>
-      <Box sx={{ width: '100%', height: '100%', background: '#bdbdbd' }} />
+      <Box
+        id="game"
+        sx={{ width: '100%', height: '100%', background: '#bdbdbd' }}
+      >
+        <TextAlivePlayerGame />
+      </Box>
       {showLyrics && text !== '' && (
         <CaptionContainer
           sx={{

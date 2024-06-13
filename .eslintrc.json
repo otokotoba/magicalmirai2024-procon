@@ -11,7 +11,8 @@
   "plugins": [
     "@typescript-eslint",
     "import",
-    "unicorn"
+    "unicorn",
+    "react"
   ],
   "extends": [
     "eslint:recommended",
@@ -23,6 +24,7 @@
     "plugin:react/jsx-runtime",
     "plugin:react-hooks/recommended",
     "plugin:@next/next/recommended",
+    "plugin:@react-three/recommended",
     "prettier"
   ],
   "rules": {
@@ -128,6 +130,7 @@
         ]
       }
     ],
-    "unicorn/prefer-node-protocol": "error"
+    "unicorn/prefer-node-protocol": "error",
+    "react/no-unknown-property": "off"
   }
 }
