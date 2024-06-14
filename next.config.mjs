@@ -10,6 +10,7 @@ const nextConfig = {
       'three',
       '@react-three/fiber',
       '@react-three/drei',
+      '@dimforge/rapier3d-compat',
     ],
   },
   transpilePackages: ['three'],
