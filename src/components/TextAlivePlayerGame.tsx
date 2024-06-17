@@ -5,7 +5,7 @@ import { Suspense } from 'react';
 import { VSMShadowMap } from 'three';
 
 import { Player } from '@/components/game/Player';
-import { World } from '@/components/game/World';
+import { Stage } from '@/components/game/Stage';
 
 export function TextAlivePlayerGame(): JSX.Element {
   return (
@@ -46,7 +46,7 @@ export function TextAlivePlayerGame(): JSX.Element {
 
       <Suspense>
         <Physics gravity={[0, -30, 0]} colliders={false}>
-          <World />
+          <Stage />
           <Player />
         </Physics>
       </Suspense>
