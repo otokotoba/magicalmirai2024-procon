@@ -51,7 +51,7 @@ export function TextAlivePlayerGame(): JSX.Element {
         </Physics>
       </Suspense>
 
-      <PointerLockControls />
+      <PointerLockControls selector="#game" />
     </Canvas>
   );
 }

@@ -14,10 +14,11 @@ export function Player(): JSX.Element {
   return (
     <KeyboardControls map={KEYMAP}>
       <Ecctrl
-        maxVelLimit={4}
+        maxVelLimit={6}
         jumpVel={5}
+        springK={0}
         // First-person view
-        camInitDis={-0.01}
+        camInitDis={-2}
         camMinDis={-0.01}
         camFollowMult={100}
         turnVelMultiplier={1}
