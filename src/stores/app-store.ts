@@ -8,6 +8,8 @@ export type AppState = {
   text: string;
   progress: number;
   showLyrics: boolean;
+  showControls: boolean;
+  canvasHeight?: number;
 };
 
 export type AppActions = {
@@ -16,6 +18,8 @@ export type AppActions = {
   setText: (text: AppState['text']) => void;
   setProgress: (progress: AppState['progress']) => void;
   setShowLyrics: (showLyrics: AppState['showLyrics']) => void;
+  setShowControls: (showControls: AppState['showControls']) => void;
+  setCanvasHeight: (canvasHeight: AppState['canvasHeight']) => void;
 };
 
 export type AppStore = AppState & AppActions;
@@ -25,6 +29,7 @@ export const defaultInitState: AppState = {
   text: '',
   progress: 0,
   showLyrics: true,
+  showControls: true,
 };
 
 export const createAppStore = (
@@ -37,5 +42,7 @@ export const createAppStore = (
     setText: text => set(() => ({ text })),
     setProgress: progress => set(() => ({ progress })),
     setShowLyrics: showLyrics => set(() => ({ showLyrics })),
+    setShowControls: showControls => set(() => ({ showControls })),
+    setCanvasHeight: canvasHeight => set(() => ({ canvasHeight })),
   }));
 };

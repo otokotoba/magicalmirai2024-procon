@@ -1,7 +1,7 @@
 'use client';
 
 import { Box, Stack } from '@mui/material';
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import {
   Player,
   PlayerAppListener,
@@ -20,6 +20,7 @@ export function TextAlivePlayer(): JSX.Element {
   const setLoading = useAppStore(state => state.setLoading);
   const setText = useAppStore(state => state.setText);
   const setProgress = useAppStore(state => state.setProgress);
+  const showControls = useAppStore(state => state.showControls);
 
   useEffect(() => {
     const player = new Player({
@@ -77,14 +78,29 @@ export function TextAlivePlayer(): JSX.Element {
     };
   }, [setLoading, setPlayer, setProgress, setText]);
 
+  const stackRef = useRef<HTMLDivElement | null>(null);
+  const screenRef = useRef<HTMLDivElement | null>(null);
+  const controlsRef = useRef<HTMLDivElement | null>(null);
+  const setCanvasHeight = useAppStore(state => state.setCanvasHeight);
+
+  useEffect(() => {
+    if (!stackRef.current || !screenRef.current || !controlsRef.current) return;
+
+    const stackHeight = stackRef.current.clientHeight;
+    const screenHeight = screenRef.current.clientHeight;
+    const controlsHeight = controlsRef.current.clientHeight;
+
+    if (showControls && stackHeight === screenHeight) {
+      setCanvasHeight(stackHeight - controlsHeight);
+    }
+  }, [setCanvasHeight, showControls]);
+
   return (
-    <Stack sx={{ height: '100%' }}>
-      <Box sx={{ flexGrow: 1 }}>
+    <Stack ref={stackRef} sx={{ height: '100%' }}>
+      <Box ref={screenRef} sx={{ flexGrow: 1 }}>
         <TextAlivePlayerScreen />
       </Box>
-      <Box>
-        <TextAlivePlayerControls />
-      </Box>
+      <Box ref={controlsRef}>{showControls && <TextAlivePlayerControls />}</Box>
     </Stack>
   );
 }

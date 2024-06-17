@@ -1,15 +1,55 @@
 import { PointerLockControls, Sky } from '@react-three/drei';
 import { Canvas } from '@react-three/fiber';
 import { Physics } from '@react-three/rapier';
-import { Suspense } from 'react';
+import { Suspense, useCallback, useEffect, useRef } from 'react';
 import { VSMShadowMap } from 'three';
 
+import { useAppStore } from '@/components/AppStoreProvider';
 import { Player } from '@/components/game/Player';
 import { Stage } from '@/components/game/Stage';
 
 export function TextAlivePlayerGame(): JSX.Element {
+  const setshowControls = useAppStore(state => state.setShowControls);
+  const handleLock = useCallback(
+    () => setshowControls(false),
+    [setshowControls]
+  );
+  const handleUnLock = useCallback(
+    () => setshowControls(true),
+    [setshowControls]
+  );
+
+  const canvasRef = useRef<HTMLCanvasElement | null>(null);
+  const [canvasHeight, setCanvasHeight] = useAppStore(state => [
+    state.canvasHeight,
+    state.setCanvasHeight,
+  ]);
+
+  useEffect(() => {
+    if (!canvasRef.current) return;
+
+    const observer = new ResizeObserver(entries => {
+      for (const e of entries) {
+        if (!e.contentBoxSize || !e.borderBoxSize[0]) continue;
+        setCanvasHeight(e.contentBoxSize[0].blockSize);
+      }
+    });
+    observer.observe(canvasRef.current);
+  }, [setCanvasHeight]);
+
+  useEffect(() => {
+    if (
+      !canvasRef.current ||
+      !canvasHeight ||
+      canvasRef.current.clientHeight === canvasHeight
+    )
+      return;
+    canvasRef.current.style.height = `${canvasHeight}px`;
+  }, [canvasHeight]);
+
   return (
     <Canvas
+      ref={canvasRef}
       shadows
       camera={{ fov: 70, near: 0.1, far: 1000 }}
       resize={{ debounce: 50 }}
@@ -51,7 +91,11 @@ export function TextAlivePlayerGame(): JSX.Element {
         </Physics>
       </Suspense>
 
-      <PointerLockControls selector="#game" />
+      <PointerLockControls
+        selector="#game"
+        onLock={handleLock}
+        onUnlock={handleUnLock}
+      />
     </Canvas>
   );
 }
