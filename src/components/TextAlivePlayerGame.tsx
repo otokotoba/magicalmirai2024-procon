@@ -1,4 +1,4 @@
-import { PointerLockControls, Sky } from '@react-three/drei';
+import { Center, PointerLockControls, Sky } from '@react-three/drei';
 import { Canvas } from '@react-three/fiber';
 import { Physics } from '@react-three/rapier';
 import { Suspense, useCallback, useEffect, useRef } from 'react';
@@ -83,11 +83,15 @@ export function TextAlivePlayerGame(): JSX.Element {
         intensity={1.5}
         position={[0, 1, 0]}
       />
-
       <Suspense>
         <Physics gravity={[0, -30, 0]} colliders={false}>
-          <Stage />
-          <Player />
+          <Center>
+            <Stage />
+            <Player
+              position={[-25, 0, 0]}
+              camInitDir={{ x: 0, y: Math.PI / 2 }}
+            />
+          </Center>
         </Physics>
       </Suspense>
 

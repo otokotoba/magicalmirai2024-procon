@@ -1,5 +1,5 @@
 import { KeyboardControls, KeyboardControlsEntry } from '@react-three/drei';
-import Ecctrl from 'ecctrl';
+import Ecctrl, { EcctrlProps } from 'ecctrl';
 
 export const KEYMAP: KeyboardControlsEntry[] = [
   { name: 'forward', keys: ['ArrowUp', 'KeyW'] },
@@ -10,10 +10,11 @@ export const KEYMAP: KeyboardControlsEntry[] = [
   { name: 'run', keys: ['Shift'] },
 ];
 
-export function Player(): JSX.Element {
+export function Player(props: EcctrlProps): JSX.Element {
   return (
     <KeyboardControls map={KEYMAP}>
       <Ecctrl
+        {...props}
         maxVelLimit={6}
         jumpVel={5}
         springK={0}
