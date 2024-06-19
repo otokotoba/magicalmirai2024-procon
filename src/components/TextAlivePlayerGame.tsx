@@ -47,6 +47,8 @@ export function TextAlivePlayerGame(): JSX.Element {
     canvasRef.current.style.height = `${canvasHeight}px`;
   }, [canvasHeight]);
 
+  const alive = useAppStore(state => state.alive);
+
   return (
     <Canvas
       ref={canvasRef}
@@ -88,10 +90,12 @@ export function TextAlivePlayerGame(): JSX.Element {
         <Physics gravity={[0, -30, 0]} colliders={false}>
           <Center>
             <Stage />
-            <Player
-              position={[-25, 0, 0]}
-              camInitDir={{ x: 0, y: Math.PI / 2 }}
-            />
+            {alive && (
+              <Player
+                position={[-25, 0, 0]}
+                camInitDir={{ x: 0, y: Math.PI / 2 }}
+              />
+            )}
           </Center>
         </Physics>
       </Suspense>

@@ -1,5 +1,11 @@
+import { Vector } from '@dimforge/rapier3d-compat';
 import { KeyboardControls, KeyboardControlsEntry } from '@react-three/drei';
+import { useFrame } from '@react-three/fiber';
+import { RapierRigidBody } from '@react-three/rapier';
 import Ecctrl, { EcctrlProps } from 'ecctrl';
+import { useRef } from 'react';
+
+import { useAppStore } from '@/components/AppStoreProvider';
 
 export const KEYMAP: KeyboardControlsEntry[] = [
   { name: 'forward', keys: ['ArrowUp', 'KeyW'] },
@@ -10,10 +16,48 @@ export const KEYMAP: KeyboardControlsEntry[] = [
   { name: 'run', keys: ['Shift'] },
 ];
 
+type Range = [number, number];
+
+const withinRange = (
+  v3: Vector,
+  xRange: Range,
+  yRange: Range,
+  zRange: Range
+): boolean => {
+  return (
+    xRange[0] <= v3.x &&
+    v3.x <= xRange[1] &&
+    yRange[0] <= v3.y &&
+    v3.y <= yRange[1] &&
+    zRange[0] <= v3.z &&
+    v3.z <= zRange[1]
+  );
+};
+
 export function Player(props: EcctrlProps): JSX.Element {
+  const setAlive = useAppStore(state => state.setAlive);
+  const playerRef = useRef<RapierRigidBody | null>(null);
+
+  useFrame(() => {
+    if (!playerRef.current) return;
+
+    if (
+      !withinRange(
+        playerRef.current.translation(),
+        [-60, 30],
+        [-50, 0],
+        [-60, 60]
+      )
+    ) {
+      setAlive(false);
+      setTimeout(() => setAlive(true), 50);
+    }
+  });
+
   return (
     <KeyboardControls map={KEYMAP}>
       <Ecctrl
+        ref={playerRef}
         {...props}
         maxVelLimit={6}
         jumpVel={5}

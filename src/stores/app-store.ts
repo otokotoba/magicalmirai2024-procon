@@ -10,6 +10,7 @@ export type AppState = {
   showLyrics: boolean;
   showControls: boolean;
   canvasHeight?: number;
+  alive: boolean;
 };
 
 export type AppActions = {
@@ -20,6 +21,7 @@ export type AppActions = {
   setShowLyrics: (showLyrics: AppState['showLyrics']) => void;
   setShowControls: (showControls: AppState['showControls']) => void;
   setCanvasHeight: (canvasHeight: AppState['canvasHeight']) => void;
+  setAlive: (alive: AppState['alive']) => void;
 };
 
 export type AppStore = AppState & AppActions;
@@ -30,6 +32,7 @@ export const defaultInitState: AppState = {
   progress: 0,
   showLyrics: true,
   showControls: true,
+  alive: true,
 };
 
 export const createAppStore = (
@@ -44,5 +47,6 @@ export const createAppStore = (
     setShowLyrics: showLyrics => set(() => ({ showLyrics })),
     setShowControls: showControls => set(() => ({ showControls })),
     setCanvasHeight: canvasHeight => set(() => ({ canvasHeight })),
+    setAlive: alive => set(() => ({ alive })),
   }));
 };
