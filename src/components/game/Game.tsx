@@ -4,9 +4,9 @@ import { Physics } from '@react-three/rapier';
 import { Suspense, useCallback, useEffect, useRef } from 'react';
 import { Color, VSMShadowMap } from 'three';
 
-import { useAppStore } from '@/components/AppStoreProvider';
-import { Player } from '@/components/game/Player';
-import { Stage } from '@/components/game/Stage';
+import { Player } from './Player';
+import { Stage } from './Stage';
+import { useAppStore } from '../AppStoreProvider';
 
 export function TextAlivePlayerGame(): JSX.Element {
   const setshowControls = useAppStore(state => state.setShowControls);

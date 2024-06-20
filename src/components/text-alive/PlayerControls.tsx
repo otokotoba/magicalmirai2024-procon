@@ -20,9 +20,9 @@ import {
 } from '@mui/material';
 import { useCallback, useState } from 'react';
 
-import { useAppStore } from './AppStoreProvider';
+import { useAppStore } from '../AppStoreProvider';
 
-export function TextAlivePlayerControls(): JSX.Element {
+export function PlayerControls(): JSX.Element {
   const player = useAppStore(state => state.player);
   const loading = useAppStore(state => state.loading);
   const [progress, setProgress] = useAppStore(state => [

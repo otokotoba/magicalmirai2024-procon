@@ -3,19 +3,19 @@
 import { Box, Stack } from '@mui/material';
 import { useEffect, useRef } from 'react';
 import {
-  Player,
   PlayerAppListener,
   PlayerEventListener,
+  Player as TextAlivePlayer,
 } from 'textalive-app-api';
 
-import { useAppStore } from './AppStoreProvider';
-import { TextAlivePlayerControls } from './TextAlivePlayerControls';
-import { TextAlivePlayerScreen } from './TextAlivePlayerScreen';
+import { PlayerControls } from './PlayerControls';
+import { PlayerScreen } from './PlayerScreen';
+import { useAppStore } from '../AppStoreProvider';
 
 const SONG_URL = 'https://piapro.jp/t/xEA7/20240202002556';
 const TIME_DELTA = 50;
 
-export function TextAlivePlayer(): JSX.Element {
+export function Player(): JSX.Element {
   const setPlayer = useAppStore(state => state.setPlayer);
   const setLoading = useAppStore(state => state.setLoading);
   const setText = useAppStore(state => state.setText);
@@ -23,9 +23,9 @@ export function TextAlivePlayer(): JSX.Element {
   const showControls = useAppStore(state => state.showControls);
 
   useEffect(() => {
-    const player = new Player({
+    const player = new TextAlivePlayer({
       app: { token: 'ihuwWjJtf00zXY5a' },
-      mediaElement: document.getElementById('media') as HTMLElement,
+      mediaElement: document.getElementById('media'),
     });
 
     const playerAppListener: PlayerAppListener = {
@@ -98,9 +98,9 @@ export function TextAlivePlayer(): JSX.Element {
   return (
     <Stack ref={stackRef} sx={{ height: '100%' }}>
       <Box ref={screenRef} sx={{ flexGrow: 1 }}>
-        <TextAlivePlayerScreen />
+        <PlayerScreen />
       </Box>
-      <Box ref={controlsRef}>{showControls && <TextAlivePlayerControls />}</Box>
+      <Box ref={controlsRef}>{showControls && <PlayerControls />}</Box>
     </Stack>
   );
 }

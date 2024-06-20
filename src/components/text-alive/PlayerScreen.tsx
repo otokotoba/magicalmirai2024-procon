@@ -1,7 +1,7 @@
 import { Box, BoxProps, styled, Typography } from '@mui/material';
 
-import { useAppStore } from './AppStoreProvider';
-import { TextAlivePlayerGame } from './TextAlivePlayerGame';
+import { useAppStore } from '../AppStoreProvider';
+import { TextAlivePlayerGame } from '../game/Game';
 
 const CaptionContainer = styled(Box)<BoxProps>(({ theme }) => ({
   backgroundColor: theme.palette.grey[900],
@@ -11,7 +11,7 @@ const CaptionContainer = styled(Box)<BoxProps>(({ theme }) => ({
   borderRadius: '4px',
 }));
 
-export function TextAlivePlayerScreen(): JSX.Element {
+export function PlayerScreen(): JSX.Element {
   const text = useAppStore(state => state.text);
   const showLyrics = useAppStore(state => state.showLyrics);
 

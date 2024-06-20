@@ -2,7 +2,7 @@
 
 import { Box } from '@mui/material';
 
-import { TextAlivePlayer } from '@/components/TextAlivePlayer';
+import { Player } from '@/components/text-alive/Player';
 
 export default function Home(): JSX.Element {
   return (
@@ -14,7 +14,7 @@ export default function Home(): JSX.Element {
         height: '100vh',
       }}
     >
-      <TextAlivePlayer />
+      <Player />
       <Box id="media" sx={{ display: 'none' }} />
     </Box>
   );
