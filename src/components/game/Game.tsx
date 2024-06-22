@@ -5,6 +5,7 @@ import { Suspense, useCallback, useEffect, useRef } from 'react';
 import { Color, VSMShadowMap } from 'three';
 
 import { Player } from './Player';
+import { RacingMiku } from './RacingMiku';
 import { Stage } from './Stage';
 import { useAppStore } from '../AppStoreProvider';
 
@@ -90,6 +91,11 @@ export function TextAlivePlayerGame(): JSX.Element {
         <Physics gravity={[0, -30, 0]} colliders={false}>
           <Center>
             <Stage />
+            <RacingMiku
+              position={[0, -8.3, 0]}
+              scale={0.2}
+              rotation={[0, -Math.PI / 2, 0]}
+            />
             {alive && (
               <Player
                 position={[-25, 0, 0]}
