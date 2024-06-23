@@ -27,6 +27,7 @@ export default function RootLayout({
         <AppRouterCacheProvider>
           <body className={inter.className}>
             <AppStoreProvider>{children}</AppStoreProvider>
+            <script src="/libs/ammo.wasm.js" async />
           </body>
         </AppRouterCacheProvider>
       </CssBaseline>

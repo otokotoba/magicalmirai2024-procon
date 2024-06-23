@@ -92,7 +92,7 @@ export function TextAlivePlayerGame(): JSX.Element {
           <Center>
             <Stage />
             <RacingMiku
-              position={[0, -8.3, 0]}
+              position={[0, -8, 0]}
               scale={0.2}
               rotation={[0, -Math.PI / 2, 0]}
             />
