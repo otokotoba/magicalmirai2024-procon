@@ -5,6 +5,7 @@ import { createStore } from 'zustand/vanilla';
 export type AppState = {
   player?: Player;
   loading: boolean;
+  playing: boolean;
   text: string;
   progress: number;
   showLyrics: boolean;
@@ -16,6 +17,7 @@ export type AppState = {
 export type AppActions = {
   setPlayer: (player: AppState['player']) => void;
   setLoading: (loading: AppState['loading']) => void;
+  setPlaying: (playing: AppState['playing']) => void;
   setText: (text: AppState['text']) => void;
   setProgress: (progress: AppState['progress']) => void;
   setShowLyrics: (showLyrics: AppState['showLyrics']) => void;
@@ -28,6 +30,7 @@ export type AppStore = AppState & AppActions;
 
 export const defaultInitState: AppState = {
   loading: true,
+  playing: false,
   text: '',
   progress: 0,
   showLyrics: true,
@@ -42,6 +45,7 @@ export const createAppStore = (
     ...initState,
     setPlayer: player => set(() => ({ player })),
     setLoading: loading => set(() => ({ loading })),
+    setPlaying: playing => set(() => ({ playing })),
     setText: text => set(() => ({ text })),
     setProgress: progress => set(() => ({ progress })),
     setShowLyrics: showLyrics => set(() => ({ showLyrics })),

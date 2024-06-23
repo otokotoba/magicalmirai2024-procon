@@ -18,13 +18,17 @@ import {
   Tooltip,
   Typography,
 } from '@mui/material';
-import { useCallback, useState } from 'react';
+import { useCallback } from 'react';
 
 import { useAppStore } from '../AppStoreProvider';
 
 export function PlayerControls(): JSX.Element {
   const player = useAppStore(state => state.player);
   const loading = useAppStore(state => state.loading);
+  const [playing, setPlaying] = useAppStore(state => [
+    state.playing,
+    state.setPlaying,
+  ]);
   const [progress, setProgress] = useAppStore(state => [
     state.progress,
     state.setProgress,
@@ -33,8 +37,6 @@ export function PlayerControls(): JSX.Element {
     state.showLyrics,
     state.setShowLyrics,
   ]);
-
-  const [playing, setPlaying] = useState<boolean>(false);
 
   const handlePlay = useCallback(() => {
     if (!player) return;
@@ -46,7 +48,7 @@ export function PlayerControls(): JSX.Element {
       player.requestPlay();
       setPlaying(true);
     }
-  }, [player]);
+  }, [player, setPlaying]);
 
   const handleChangeProgress = useCallback(
     (e: Event, value: number | number[]) => {

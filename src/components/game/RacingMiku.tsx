@@ -7,6 +7,8 @@ import { MMDLoader } from 'three/examples/jsm/loaders/MMDLoader.js';
 import { AmmoPhysics } from 'three/examples/jsm/physics/AmmoPhysics.js';
 import { MMDAnimationHelper } from 'three-stdlib';
 
+import { useAppStore } from '../AppStoreProvider';
+
 export function RacingMiku(props: JSX.IntrinsicElements['group']): JSX.Element {
   const mesh = useLoader(MMDLoader, '/mmd/racing-miku.pmx');
   const [animationHelper, setAnimationHelper] =
@@ -34,8 +36,11 @@ export function RacingMiku(props: JSX.IntrinsicElements['group']): JSX.Element {
     });
   }, [mesh]);
 
+  const playing = useAppStore(state => state.playing);
+  const progress = useAppStore(state => state.progress);
+
   useFrame((state, delta) => {
-    if (!animationHelper) return;
+    if (!animationHelper || !playing || progress === 100) return;
 
     animationHelper.update(delta);
   });
