@@ -9,7 +9,7 @@ import { RacingMiku } from './RacingMiku';
 import { Stage } from './Stage';
 import { useAppStore } from '../AppStoreProvider';
 
-export function TextAlivePlayerGame(): JSX.Element {
+export function Game(): JSX.Element {
   const setshowControls = useAppStore(state => state.setShowControls);
   const handleLock = useCallback(
     () => setshowControls(false),
