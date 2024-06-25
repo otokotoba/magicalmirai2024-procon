@@ -44,7 +44,7 @@ export function Player(props: EcctrlProps): JSX.Element {
     if (
       !withinRange(
         playerRef.current.translation(),
-        [-60, 30],
+        [-40, 40],
         [-50, 0],
         [-60, 60]
       )
