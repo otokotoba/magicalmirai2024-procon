@@ -63,6 +63,7 @@ export function TextAlivePlayerGame(): JSX.Element {
       }}
     >
       <Stars radius={400} />
+      <fog attach="fog" args={[0x000000, 0, 100]} />
       <ambientLight intensity={0.5} />
       <directionalLight
         color={0xffffff}
