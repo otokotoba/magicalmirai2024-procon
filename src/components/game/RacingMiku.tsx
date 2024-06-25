@@ -1,13 +1,15 @@
 /* eslint-disable import/extensions */
 import { useFrame, useLoader } from '@react-three/fiber';
 import { RigidBody } from '@react-three/rapier';
-import { useEffect, useState } from 'react';
-import { AnimationClip } from 'three';
+import { useEffect, useMemo, useState } from 'react';
+import { AnimationAction, AnimationClip } from 'three';
 import { MMDLoader } from 'three/examples/jsm/loaders/MMDLoader.js';
 import { AmmoPhysics } from 'three/examples/jsm/physics/AmmoPhysics.js';
 import { MMDAnimationHelper } from 'three-stdlib';
 
 import { useAppStore } from '../AppStoreProvider';
+
+type AnimationName = 'dance' | 'blink';
 
 export function RacingMiku(props: JSX.IntrinsicElements['group']): JSX.Element {
   const mesh = useLoader(MMDLoader, '/mmd/racing-miku.pmx');
@@ -25,22 +27,57 @@ export function RacingMiku(props: JSX.IntrinsicElements['group']): JSX.Element {
     const loader = new MMDLoader();
     const helper = new MMDAnimationHelper();
 
-    loader.loadAnimation('/mmd/dance.vmd', mesh, a => {
-      a.name = 'dance';
-      if (!mesh.animations.some(a => a.name === 'dance')) {
-        mesh.animations.push(a as AnimationClip);
-      }
+    const addAnimation = (
+      animation: AnimationClip,
+      name: AnimationName
+    ): void => {
+      animation.name = name;
 
-      helper.add(mesh, { animation: a as AnimationClip });
-      setAnimationHelper(helper);
+      if (!mesh.animations.some(a => a.name === name)) {
+        mesh.animations.push(animation);
+      }
+    };
+
+    loader.loadAnimation('/mmd/dance.vmd', mesh, animation => {
+      addAnimation(animation as AnimationClip, 'dance');
+
+      loader.loadAnimation('/mmd/blink.vmd', mesh, animation => {
+        addAnimation(animation as AnimationClip, 'blink');
+        helper.add(mesh, { animation: mesh.animations });
+
+        setAnimationHelper(helper);
+      });
     });
   }, [mesh]);
 
   const playing = useAppStore(state => state.playing);
   const progress = useAppStore(state => state.progress);
 
+  const mixer = useMemo(
+    () => animationHelper?.objects.get(mesh).mixer,
+    [animationHelper, mesh]
+  );
+  const actions = useMemo(
+    () =>
+      Object.fromEntries(
+        mesh.animations.map(a => [a.name, mixer.clipAction(a)])
+      ) as { [name in AnimationName]: AnimationAction },
+    [mesh.animations, mixer]
+  );
+
   useFrame((state, delta) => {
-    if (!animationHelper || !playing || progress === 100) return;
+    if (!animationHelper) return;
+
+    if (!actions.blink.isRunning()) {
+      actions.blink.play();
+    }
+
+    if (!playing || progress === 100) {
+      actions.dance.timeScale = 0;
+    } else if (!actions.dance.isRunning()) {
+      actions.dance.timeScale = 1;
+      actions.dance.play();
+    }
 
     animationHelper.update(delta);
   });
