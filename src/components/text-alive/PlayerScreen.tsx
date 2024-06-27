@@ -32,7 +32,9 @@ export function PlayerScreen(): JSX.Element {
             transform: 'translateX(-50%)',
           }}
         >
-          <Typography variant="body1">{text}</Typography>
+          <Typography variant="body1" sx={{ fontFamily: 'inherit' }}>
+            {text}
+          </Typography>
         </CaptionContainer>
       )}
     </Box>
