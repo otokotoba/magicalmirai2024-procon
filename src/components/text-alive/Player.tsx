@@ -20,14 +20,14 @@ export function Player(): JSX.Element {
     setPlayer,
     setLoading,
     setPlaying,
-    setText,
+    setLyrics,
     setProgress,
     showControls,
   ] = useAppStore(state => [
     state.setPlayer,
     state.setLoading,
     state.setPlaying,
-    state.setText,
+    state.setLyrics,
     state.setProgress,
     state.showControls,
   ]);
@@ -71,12 +71,12 @@ export function Player(): JSX.Element {
         }
 
         const withDelata = now + TIME_DELTA;
-        const current = player.video.findWord(withDelata + TIME_DELTA);
+        const current = player.video.findPhrase(withDelata + TIME_DELTA);
 
         if (current === null) {
-          setText('');
+          setLyrics({ phrase: '' });
         } else if (current.startTime < withDelata) {
-          setText(current.text);
+          setLyrics({ phrase: current.text });
         }
       },
     };
@@ -91,7 +91,7 @@ export function Player(): JSX.Element {
     return () => {
       player.removeListener(listener);
     };
-  }, [setLoading, setPlayer, setPlaying, setProgress, setText]);
+  }, [setLoading, setLyrics, setPlayer, setPlaying, setProgress]);
 
   const stackRef = useRef<HTMLDivElement | null>(null);
   const screenRef = useRef<HTMLDivElement | null>(null);

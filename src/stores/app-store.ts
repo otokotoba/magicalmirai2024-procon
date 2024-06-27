@@ -6,7 +6,9 @@ export type AppState = {
   player?: Player;
   loading: boolean;
   playing: boolean;
-  text: string;
+  lyrics: {
+    phrase: string;
+  };
   progress: number;
   showLyrics: boolean;
   showControls: boolean;
@@ -18,7 +20,7 @@ export type AppActions = {
   setPlayer: (player: AppState['player']) => void;
   setLoading: (loading: AppState['loading']) => void;
   setPlaying: (playing: AppState['playing']) => void;
-  setText: (text: AppState['text']) => void;
+  setLyrics: (text: AppState['lyrics']) => void;
   setProgress: (progress: AppState['progress']) => void;
   setShowLyrics: (showLyrics: AppState['showLyrics']) => void;
   setShowControls: (showControls: AppState['showControls']) => void;
@@ -31,7 +33,9 @@ export type AppStore = AppState & AppActions;
 export const defaultInitState: AppState = {
   loading: true,
   playing: false,
-  text: '',
+  lyrics: {
+    phrase: '',
+  },
   progress: 0,
   showLyrics: true,
   showControls: true,
@@ -46,7 +50,7 @@ export const createAppStore = (
     setPlayer: player => set(() => ({ player })),
     setLoading: loading => set(() => ({ loading })),
     setPlaying: playing => set(() => ({ playing })),
-    setText: text => set(() => ({ text })),
+    setLyrics: lyrics => set(() => ({ lyrics })),
     setProgress: progress => set(() => ({ progress })),
     setShowLyrics: showLyrics => set(() => ({ showLyrics })),
     setShowControls: showControls => set(() => ({ showControls })),

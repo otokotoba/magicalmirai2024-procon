@@ -12,7 +12,7 @@ const CaptionContainer = styled(Box)<BoxProps>(({ theme }) => ({
 }));
 
 export function PlayerScreen(): JSX.Element {
-  const text = useAppStore(state => state.text);
+  const lyrics = useAppStore(state => state.lyrics);
   const showLyrics = useAppStore(state => state.showLyrics);
 
   return (
@@ -23,7 +23,7 @@ export function PlayerScreen(): JSX.Element {
       >
         <Game />
       </Box>
-      {showLyrics && text !== '' && (
+      {showLyrics && lyrics.phrase !== '' && (
         <CaptionContainer
           sx={{
             position: 'absolute',
@@ -33,7 +33,7 @@ export function PlayerScreen(): JSX.Element {
           }}
         >
           <Typography variant="body1" sx={{ fontFamily: 'inherit' }}>
-            {text}
+            {lyrics.phrase}
           </Typography>
         </CaptionContainer>
       )}
