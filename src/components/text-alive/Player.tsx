@@ -16,11 +16,21 @@ const SONG_URL = 'https://piapro.jp/t/xEA7/20240202002556';
 const TIME_DELTA = 50;
 
 export function Player(): JSX.Element {
-  const setPlayer = useAppStore(state => state.setPlayer);
-  const setLoading = useAppStore(state => state.setLoading);
-  const setText = useAppStore(state => state.setText);
-  const setProgress = useAppStore(state => state.setProgress);
-  const showControls = useAppStore(state => state.showControls);
+  const [
+    setPlayer,
+    setLoading,
+    setPlaying,
+    setText,
+    setProgress,
+    showControls,
+  ] = useAppStore(state => [
+    state.setPlayer,
+    state.setLoading,
+    state.setPlaying,
+    state.setText,
+    state.setProgress,
+    state.showControls,
+  ]);
 
   useEffect(() => {
     const player = new TextAlivePlayer({
@@ -53,7 +63,12 @@ export function Player(): JSX.Element {
         setLoading(false);
       },
       onTimeUpdate: now => {
-        setProgress((now / player.video.duration) * 100);
+        const progress = (now / player.video.duration) * 100;
+        setProgress(progress);
+
+        if (progress === 100) {
+          setPlaying(false);
+        }
 
         const withDelata = now + TIME_DELTA;
         const current = player.video.findWord(withDelata + TIME_DELTA);
@@ -76,7 +91,7 @@ export function Player(): JSX.Element {
     return () => {
       player.removeListener(listener);
     };
-  }, [setLoading, setPlayer, setProgress, setText]);
+  }, [setLoading, setPlayer, setPlaying, setProgress, setText]);
 
   const stackRef = useRef<HTMLDivElement | null>(null);
   const screenRef = useRef<HTMLDivElement | null>(null);

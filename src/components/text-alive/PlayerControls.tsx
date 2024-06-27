@@ -121,11 +121,7 @@ export function PlayerControls(): JSX.Element {
                 color="inherit"
                 onClick={handlePlay}
               >
-                {!playing || progress === 100 ? (
-                  <PlayArrowRounded />
-                ) : (
-                  <StopRounded />
-                )}
+                {!playing ? <PlayArrowRounded /> : <StopRounded />}
               </IconButton>
             </Box>
           </Grid>

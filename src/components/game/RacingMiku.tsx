@@ -51,7 +51,6 @@ export function RacingMiku(props: JSX.IntrinsicElements['group']): JSX.Element {
   }, [mesh]);
 
   const playing = useAppStore(state => state.playing);
-  const progress = useAppStore(state => state.progress);
 
   const mixer = useMemo(
     () => animationHelper?.objects.get(mesh).mixer,
@@ -72,7 +71,7 @@ export function RacingMiku(props: JSX.IntrinsicElements['group']): JSX.Element {
       actions.blink.play();
     }
 
-    if (!playing || progress === 100) {
+    if (!playing) {
       actions.dance.timeScale = 0;
     } else if (!actions.dance.isRunning()) {
       actions.dance.timeScale = 1;
@@ -86,7 +85,7 @@ export function RacingMiku(props: JSX.IntrinsicElements['group']): JSX.Element {
   const [cameraPos, selfPos] = [new Vector3(), new Vector3()];
 
   useFrame(state => {
-    if (!ref.current || !playing || progress === 100) return;
+    if (!ref.current || !playing) return;
 
     state.camera.getWorldPosition(cameraPos);
     ref.current.getWorldPosition(selfPos);
