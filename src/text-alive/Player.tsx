@@ -10,7 +10,7 @@ import {
 
 import { PlayerControls } from './PlayerControls';
 import { PlayerScreen } from './PlayerScreen';
-import { useAppStore } from '../AppStoreProvider';
+import { useAppStore } from '../stores/AppStoreProvider';
 
 const SONG_URL = 'https://piapro.jp/t/xEA7/20240202002556';
 const TIME_DELTA = 50;

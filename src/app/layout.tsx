@@ -7,7 +7,7 @@ import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
 
-import { AppStoreProvider } from '@/components/AppStoreProvider';
+import { AppStoreProvider } from '@/stores/AppStoreProvider';
 
 const notoSansJP = Noto_Sans_JP({ subsets: ['latin'], weight: ['400'] });
 

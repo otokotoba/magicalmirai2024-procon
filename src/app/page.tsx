@@ -2,7 +2,7 @@
 
 import { Box } from '@mui/material';
 
-import { Player } from '@/components/text-alive/Player';
+import { Player } from '@/text-alive/Player';
 
 export default function Home(): JSX.Element {
   return (

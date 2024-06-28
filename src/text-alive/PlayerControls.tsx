@@ -20,7 +20,7 @@ import {
 } from '@mui/material';
 import { useCallback } from 'react';
 
-import { useAppStore } from '../AppStoreProvider';
+import { useAppStore } from '../stores/AppStoreProvider';
 
 export function PlayerControls(): JSX.Element {
   const player = useAppStore(state => state.player);

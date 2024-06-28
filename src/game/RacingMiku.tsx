@@ -7,7 +7,7 @@ import { MMDLoader } from 'three/examples/jsm/loaders/MMDLoader.js';
 import { AmmoPhysics } from 'three/examples/jsm/physics/AmmoPhysics.js';
 import { MMDAnimationHelper } from 'three-stdlib';
 
-import { useAppStore } from '../AppStoreProvider';
+import { useAppStore } from '../stores/AppStoreProvider';
 
 type AnimationName = 'dance' | 'blink';
 

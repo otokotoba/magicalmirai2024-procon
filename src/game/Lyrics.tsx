@@ -1,7 +1,7 @@
 import { Center, Float, Text3D, useFont } from '@react-three/drei';
 import { useEffect, useState } from 'react';
 
-import { useAppStore } from '../AppStoreProvider';
+import { useAppStore } from '../stores/AppStoreProvider';
 
 const FONT_PATH = '/NotoSerifJP_Regular.json';
 

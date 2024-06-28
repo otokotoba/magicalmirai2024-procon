@@ -1,7 +1,7 @@
 import { Box, BoxProps, styled, Typography } from '@mui/material';
 
-import { useAppStore } from '../AppStoreProvider';
 import { Game } from '../game/Game';
+import { useAppStore } from '../stores/AppStoreProvider';
 
 const CaptionContainer = styled(Box)<BoxProps>(({ theme }) => ({
   backgroundColor: theme.palette.grey[900],

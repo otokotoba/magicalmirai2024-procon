@@ -5,7 +5,7 @@ import { RapierRigidBody } from '@react-three/rapier';
 import Ecctrl, { EcctrlProps } from 'ecctrl';
 import { useRef } from 'react';
 
-import { useAppStore } from '../AppStoreProvider';
+import { useAppStore } from '../stores/AppStoreProvider';
 
 export const KEYMAP: KeyboardControlsEntry[] = [
   { name: 'forward', keys: ['ArrowUp', 'KeyW'] },

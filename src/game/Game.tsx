@@ -8,7 +8,7 @@ import { Lyrics } from './Lyrics';
 import { Player } from './Player';
 import { RacingMiku } from './RacingMiku';
 import { Stage } from './Stage';
-import { useAppStore } from '../AppStoreProvider';
+import { useAppStore } from '../stores/AppStoreProvider';
 
 export function Game(): JSX.Element {
   const setshowControls = useAppStore(state => state.setShowControls);
