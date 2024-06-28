@@ -4,6 +4,7 @@ import { Physics } from '@react-three/rapier';
 import { Suspense, useCallback, useEffect, useRef } from 'react';
 import { Color, VSMShadowMap } from 'three';
 
+import { Lyrics } from './Lyrics';
 import { Player } from './Player';
 import { RacingMiku } from './RacingMiku';
 import { Stage } from './Stage';
@@ -93,6 +94,7 @@ export function Game(): JSX.Element {
           <Physics gravity={[0, -30, 0]} colliders={false}>
             <Center>
               <Stage />
+              <Lyrics />
               <RacingMiku
                 position={[0, -8, 0]}
                 scale={0.2}

@@ -8,6 +8,7 @@ export type AppState = {
   playing: boolean;
   lyrics: {
     phrase: string;
+    word: string;
   };
   progress: number;
   showLyrics: boolean;
@@ -35,6 +36,7 @@ export const defaultInitState: AppState = {
   playing: false,
   lyrics: {
     phrase: '',
+    word: '',
   },
   progress: 0,
   showLyrics: true,

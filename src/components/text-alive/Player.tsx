@@ -71,12 +71,16 @@ export function Player(): JSX.Element {
         }
 
         const withDelata = now + TIME_DELTA;
-        const current = player.video.findPhrase(withDelata + TIME_DELTA);
+        const currentPhrase = player.video.findPhrase(withDelata + TIME_DELTA);
+        const currentWord = player.video.findWord(withDelata + TIME_DELTA);
 
-        if (current === null) {
-          setLyrics({ phrase: '' });
-        } else if (current.startTime < withDelata) {
-          setLyrics({ phrase: current.text });
+        if (currentPhrase === null) {
+          setLyrics({ phrase: '', word: '' });
+        } else if (
+          currentPhrase.startTime < withDelata ||
+          currentWord.startTime < withDelata
+        ) {
+          setLyrics({ phrase: currentPhrase.text, word: currentWord.text });
         }
       },
     };
