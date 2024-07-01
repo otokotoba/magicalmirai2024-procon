@@ -10,6 +10,7 @@ export type AppState = {
     phrase: string;
     word: string;
   };
+  beat: boolean;
   progress: number;
   showLyrics: boolean;
   showControls: boolean;
@@ -22,6 +23,7 @@ export type AppActions = {
   setLoading: (loading: AppState['loading']) => void;
   setPlaying: (playing: AppState['playing']) => void;
   setLyrics: (text: AppState['lyrics']) => void;
+  setBeat: (beat: AppState['beat']) => void;
   setProgress: (progress: AppState['progress']) => void;
   setShowLyrics: (showLyrics: AppState['showLyrics']) => void;
   setShowControls: (showControls: AppState['showControls']) => void;
@@ -38,6 +40,7 @@ export const defaultInitState: AppState = {
     phrase: '',
     word: '',
   },
+  beat: false,
   progress: 0,
   showLyrics: true,
   showControls: true,
@@ -53,6 +56,7 @@ export const createAppStore = (
     setLoading: loading => set(() => ({ loading })),
     setPlaying: playing => set(() => ({ playing })),
     setLyrics: lyrics => set(() => ({ lyrics })),
+    setBeat: beat => set(() => ({ beat })),
     setProgress: progress => set(() => ({ progress })),
     setShowLyrics: showLyrics => set(() => ({ showLyrics })),
     setShowControls: showControls => set(() => ({ showControls })),

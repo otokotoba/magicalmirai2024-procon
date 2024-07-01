@@ -21,6 +21,7 @@ export function Player(): JSX.Element {
     setLoading,
     setPlaying,
     setLyrics,
+    setBeat,
     setProgress,
     showControls,
   ] = useAppStore(state => [
@@ -28,6 +29,7 @@ export function Player(): JSX.Element {
     state.setLoading,
     state.setPlaying,
     state.setLyrics,
+    state.setBeat,
     state.setProgress,
     state.showControls,
   ]);
@@ -82,6 +84,17 @@ export function Player(): JSX.Element {
         ) {
           setLyrics({ phrase: currentPhrase.text, word: currentWord.text });
         }
+
+        const beat = player.findBeat(withDelata + TIME_DELTA);
+
+        if (
+          beat.startTime < withDelata &&
+          withDelata - beat.startTime < TIME_DELTA * 4
+        ) {
+          setBeat(true);
+        } else {
+          setBeat(false);
+        }
       },
     };
 
@@ -95,7 +108,7 @@ export function Player(): JSX.Element {
     return () => {
       player.removeListener(listener);
     };
-  }, [setLoading, setLyrics, setPlayer, setPlaying, setProgress]);
+  }, [setBeat, setLoading, setLyrics, setPlayer, setPlaying, setProgress]);
 
   const stackRef = useRef<HTMLDivElement | null>(null);
   const screenRef = useRef<HTMLDivElement | null>(null);

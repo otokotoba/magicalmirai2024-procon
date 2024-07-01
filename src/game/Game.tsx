@@ -1,9 +1,10 @@
 import { Center, Loader, PointerLockControls, Stars } from '@react-three/drei';
 import { Canvas } from '@react-three/fiber';
-import { Physics } from '@react-three/rapier';
+import { Physics, RapierRigidBody } from '@react-three/rapier';
 import { Suspense, useCallback, useEffect, useRef } from 'react';
 import { Color, VSMShadowMap } from 'three';
 
+import { HeartCannon } from './HeartCannon';
 import { Lyrics } from './Lyrics';
 import { Player } from './Player';
 import { RacingMiku } from './RacingMiku';
@@ -51,6 +52,9 @@ export function Game(): JSX.Element {
 
   const alive = useAppStore(state => state.alive);
 
+  const player = useRef<RapierRigidBody>(null);
+  const miku = useRef<RapierRigidBody>(null);
+
   return (
     <>
       <Canvas
@@ -94,16 +98,22 @@ export function Game(): JSX.Element {
           <Physics gravity={[0, -30, 0]} colliders={false}>
             <Center>
               <Stage />
+
               <Lyrics />
+
               <RacingMiku
                 position={[0, -8, 0]}
                 scale={0.2}
                 rotation={[0, -Math.PI / 2, 0]}
+                ref={miku}
               />
+              <HeartCannon root={miku} target={player} shotNum={1} />
+
               {alive && (
                 <Player
                   position={[-25, 0, 0]}
                   camInitDir={{ x: 0, y: Math.PI / 2 }}
+                  ref={player}
                 />
               )}
             </Center>
