@@ -1,12 +1,13 @@
 /* eslint-disable import/extensions */
 import { useFrame, useLoader } from '@react-three/fiber';
 import { RapierRigidBody, RigidBody } from '@react-three/rapier';
-import { forwardRef, useEffect, useMemo, useRef, useState } from 'react';
-import { AnimationAction, AnimationClip, Group, Vector3 } from 'three';
+import { forwardRef, useEffect, useMemo, useState } from 'react';
+import { AnimationAction, AnimationClip } from 'three';
 import { MMDLoader } from 'three/examples/jsm/loaders/MMDLoader.js';
 import { AmmoPhysics } from 'three/examples/jsm/physics/AmmoPhysics.js';
 import { MMDAnimationHelper } from 'three-stdlib';
 
+import { CameraFollower } from './CameraFollower';
 import { useAppStore } from '../stores/AppStoreProvider';
 
 type AnimationName = 'dance' | 'blink';
@@ -90,24 +91,12 @@ export const RacingMiku = forwardRef<
       animationHelper.update(delta);
     });
 
-    const ref = useRef<Group>(null);
-    const [cameraPos, selfPos] = [new Vector3(), new Vector3()];
-
-    useFrame(state => {
-      if (!ref.current || !playing) return;
-
-      state.camera.getWorldPosition(cameraPos);
-      ref.current.getWorldPosition(selfPos);
-
-      ref.current.lookAt(cameraPos.x, selfPos.y, cameraPos.z);
-    });
-
     return (
       animationHelper && (
         <RigidBody colliders="cuboid" density={2} ref={fref}>
-          <group {...props} ref={ref}>
+          <CameraFollower condition={playing} {...props}>
             <primitive object={mesh} />
-          </group>
+          </CameraFollower>
         </RigidBody>
       )
     );

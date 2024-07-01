@@ -1,11 +1,12 @@
 import { useGLTF } from '@react-three/drei';
-import { useFrame, Vector3 as Vector3Like } from '@react-three/fiber';
+import { Vector3 as Vector3Like } from '@react-three/fiber';
 import { RapierRigidBody, RigidBody } from '@react-three/rapier';
 import { RefObject, useEffect, useMemo, useRef, useState } from 'react';
-import { Group, Mesh, MeshStandardMaterial, Vector3 } from 'three';
+import { Mesh, MeshStandardMaterial, Vector3 } from 'three';
 import { GLTF } from 'three-stdlib';
 
-import { useAppStore } from '@/stores/AppStoreProvider';
+import { CameraFollower } from './CameraFollower';
+import { useAppStore } from '../stores/AppStoreProvider';
 
 type GLTFResult = GLTF & {
   nodes: {
@@ -30,18 +31,6 @@ export const HeartShot = function HeartShot({
   target,
 }: HeartShotProps): JSX.Element {
   const { nodes, materials } = useGLTF(PATH) as GLTFResult;
-
-  const objRef = useRef<Group>(null);
-  const [cameraPos, objPos] = [new Vector3(), new Vector3()];
-
-  useFrame(state => {
-    if (!objRef.current) return;
-
-    state.camera.getWorldPosition(cameraPos);
-    objRef.current.getWorldPosition(objPos);
-
-    objRef.current.lookAt(cameraPos.x, objPos.y, cameraPos.z);
-  });
 
   const ref = useRef<RapierRigidBody>(null);
   const [fired, setFired] = useState(false);
@@ -73,13 +62,13 @@ export const HeartShot = function HeartShot({
   return (
     !fired && (
       <RigidBody colliders="ball" density={0.5} position={position} ref={ref}>
-        <group ref={objRef}>
+        <CameraFollower>
           <mesh
             geometry={nodes.heart_teamRed.geometry}
             material={materials['Red.015']}
             rotation={[Math.PI / 2, 0, 0]}
           />
-        </group>
+        </CameraFollower>
       </RigidBody>
     )
   );
