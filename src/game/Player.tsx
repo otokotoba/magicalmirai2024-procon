@@ -1,11 +1,20 @@
-import { Vector } from '@dimforge/rapier3d-compat';
 import { KeyboardControls, KeyboardControlsEntry } from '@react-three/drei';
-import { useFrame } from '@react-three/fiber';
+import { useFrame, useThree } from '@react-three/fiber';
 import { RapierRigidBody } from '@react-three/rapier';
 import Ecctrl, { EcctrlProps } from 'ecctrl';
-import { forwardRef, useImperativeHandle, useRef } from 'react';
+import {
+  forwardRef,
+  useEffect,
+  useImperativeHandle,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
+import { Vector3 } from 'three';
 
+import { HeartShot } from './HeartShot';
 import { useAppStore } from '../stores/AppStoreProvider';
+import { withinRange } from '../utils';
 
 export const KEYMAP: KeyboardControlsEntry[] = [
   { name: 'forward', keys: ['ArrowUp', 'KeyW'] },
@@ -16,60 +25,80 @@ export const KEYMAP: KeyboardControlsEntry[] = [
   { name: 'run', keys: ['Shift'] },
 ];
 
-type Range = [number, number];
-
-const withinRange = (
-  v3: Vector,
-  xRange: Range,
-  yRange: Range,
-  zRange: Range
-): boolean => {
-  return (
-    xRange[0] <= v3.x &&
-    v3.x <= xRange[1] &&
-    yRange[0] <= v3.y &&
-    v3.y <= yRange[1] &&
-    zRange[0] <= v3.z &&
-    v3.z <= zRange[1]
-  );
-};
-
 export const Player = forwardRef<RapierRigidBody, EcctrlProps>(
   // eslint-disable-next-line @typescript-eslint/typedef
   function Player(props, fref): JSX.Element {
     const setAlive = useAppStore(state => state.setAlive);
-    const ref = useRef<RapierRigidBody>(null);
+    const player = useRef<RapierRigidBody>(null);
 
     useFrame(() => {
-      if (!ref.current) return;
+      if (!player.current) return;
 
       if (
-        !withinRange(ref.current.translation(), [-40, 40], [-50, 0], [-60, 60])
+        !withinRange(
+          player.current.translation(),
+          [-40, 40],
+          [-50, 0],
+          [-60, 60]
+        )
       ) {
         setAlive(false);
         setTimeout(() => setAlive(true), 50);
       }
     });
 
-    useImperativeHandle(fref, () => ref.current);
+    useImperativeHandle(fref, () => player.current);
+
+    const [keys, setKeys] = useState<string[]>([]);
+
+    useEffect(() => {
+      const handleClick: Parameters<
+        (typeof window)['addEventListener']
+      >[1] = () => {
+        if (!document.pointerLockElement) return;
+
+        setKeys(prev => [...prev, `${new Date().getTime()}`]);
+      };
+
+      window.addEventListener('click', handleClick);
+
+      return () => {
+        window.removeEventListener('click', handleClick);
+      };
+    });
+
+    const camera = useThree(state => state.camera);
+    const direction = useMemo(() => new Vector3(), []);
+    camera.getWorldDirection(direction);
 
     return (
-      <KeyboardControls map={KEYMAP}>
-        <Ecctrl
-          ref={ref}
-          {...props}
-          maxVelLimit={6}
-          jumpVel={5}
-          springK={0}
-          // First-person view
-          camInitDis={-2}
-          camMinDis={-0.01}
-          camFollowMult={100}
-          turnVelMultiplier={1}
-          turnSpeed={100}
-          mode="CameraBasedMovement"
-        />
-      </KeyboardControls>
+      <>
+        <KeyboardControls map={KEYMAP}>
+          <Ecctrl
+            ref={player}
+            {...props}
+            maxVelLimit={6}
+            jumpVel={5}
+            springK={0}
+            autoBalance={false}
+            // First-person view
+            camInitDis={-2}
+            camMinDis={-0.01}
+            camFollowMult={100}
+            turnVelMultiplier={1}
+            turnSpeed={100}
+            mode="CameraBasedMovement"
+          />
+        </KeyboardControls>
+
+        {keys.map(key => (
+          <HeartShot
+            key={key}
+            root={player}
+            offset={[direction.x, direction.y, direction.z]}
+          />
+        ))}
+      </>
     );
   }
 );

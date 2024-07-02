@@ -4,7 +4,6 @@ import { Physics, RapierRigidBody } from '@react-three/rapier';
 import { Suspense, useCallback, useEffect, useRef } from 'react';
 import { Color, VSMShadowMap } from 'three';
 
-import { HeartCannon } from './HeartCannon';
 import { Lyrics } from './Lyrics';
 import { Player } from './Player';
 import { RacingMiku } from './RacingMiku';
@@ -94,7 +93,7 @@ export function Game(): JSX.Element {
           position={[0, 0, 0]}
         />
         <Suspense>
-          <Physics gravity={[0, -30, 0]} colliders={false}>
+          <Physics gravity={[0, -40, 0]} colliders={false}>
             <Center>
               <Stage />
 
@@ -105,18 +104,13 @@ export function Game(): JSX.Element {
                 scale={0.2}
                 rotation={[0, -Math.PI / 2, 0]}
               />
-              <HeartCannon
-                target={player}
-                shotNum={1}
-                position={[-17, -8, -8]}
-                rotation={[0, -Math.PI / 2, 0]}
-                scale={0.1}
-              />
 
               {alive && (
                 <Player
                   position={[-25, 0, 0]}
                   camInitDir={{ x: 0, y: Math.PI / 2 }}
+                  capsuleHalfHeight={1}
+                  capsuleRadius={0.4}
                   ref={player}
                 />
               )}

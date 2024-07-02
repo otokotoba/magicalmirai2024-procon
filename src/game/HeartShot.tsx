@@ -1,11 +1,23 @@
 import { useGLTF } from '@react-three/drei';
-import { RapierRigidBody, RigidBody } from '@react-three/rapier';
-import { RefObject, useEffect, useRef, useState } from 'react';
+import { useThree } from '@react-three/fiber';
+import {
+  RapierRigidBody,
+  RigidBody,
+  RigidBodyProps,
+} from '@react-three/rapier';
+import {
+  RefObject,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 import { Mesh, MeshStandardMaterial, Vector3 } from 'three';
 import { GLTF } from 'three-stdlib';
 
 import { CameraFollower } from './CameraFollower';
-import { useAppStore } from '../stores/AppStoreProvider';
+import { toTuple } from '../utils';
 
 type GLTFResult = GLTF & {
   nodes: {
@@ -48,6 +60,8 @@ export function HeartShot({
     );
   }, [fired, offset, root]);
 
+  const camera = useThree(state => state.camera);
+  const direction = useMemo(() => new Vector3(), []);
 
   useEffect(() => {
     if (!ref.current || fired) return;
@@ -62,15 +76,37 @@ export function HeartShot({
         .add({ x: 0, y: 30, z: 0 });
 
       ref.current.setLinvel(vel, true);
+    } else {
+      camera.getWorldDirection(direction);
+
+      const vel = new Vector3(...toTuple(root.current.linvel()));
+      const extra = vel.length() >= 1 ? Math.log(vel.length()) ** 2 : 0;
+
+      direction
+        .normalize()
+        .multiplyScalar(40 + extra)
+        .add({ x: 0, y: 20, z: 0 });
+
+      ref.current.setLinvel(direction, true);
     }
 
     setFired(true);
     setTimeout(() => setVisible(false), 5000);
-  }, [fired, target, visible]);
+  }, [camera, direction, fired, root, target, visible]);
+
+  const handleCollisionEnter: RigidBodyProps['onCollisionEnter'] =
+    useCallback(() => {
+      setTimeout(() => setVisible(false), 20);
+    }, []);
 
   return (
     visible && (
-      <RigidBody colliders="cuboid" density={0.5} ref={ref}>
+      <RigidBody
+        colliders="ball"
+        density={1}
+        ref={ref}
+        onCollisionEnter={handleCollisionEnter}
+      >
         <CameraFollower>
           <mesh
             geometry={nodes.heart_teamRed.geometry}
