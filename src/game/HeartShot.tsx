@@ -1,7 +1,6 @@
 import { useGLTF } from '@react-three/drei';
-import { Vector3 as Vector3Like } from '@react-three/fiber';
 import { RapierRigidBody, RigidBody } from '@react-three/rapier';
-import { RefObject, useEffect, useMemo, useRef, useState } from 'react';
+import { RefObject, useEffect, useRef, useState } from 'react';
 import { Mesh, MeshStandardMaterial, Vector3 } from 'three';
 import { GLTF } from 'three-stdlib';
 
@@ -19,6 +18,7 @@ type GLTFResult = GLTF & {
 
 export type HeartShotProps = {
   root: RefObject<RapierRigidBody>;
+  offset?: [x: number, y: number, z: number];
   target?: RefObject<RapierRigidBody>;
 };
 
@@ -26,42 +26,51 @@ const PATH = '/heart.gltf';
 
 useGLTF.preload(PATH);
 
-export const HeartShot = function HeartShot({
+export function HeartShot({
   root,
+  offset = [0, 0, 0],
   target,
 }: HeartShotProps): JSX.Element {
   const { nodes, materials } = useGLTF(PATH) as GLTFResult;
 
   const ref = useRef<RapierRigidBody>(null);
+  const [visible, setVisible] = useState(true);
   const [fired, setFired] = useState(false);
-  const beat = useAppStore(state => state.beat);
 
   useEffect(() => {
-    if (!ref.current || !beat || fired) return;
+    if (!root.current || !ref.current || fired) return;
+
+    const pos = root.current.translation();
+
+    ref.current.setTranslation(
+      { x: pos.x + offset[0], y: pos.y + offset[1], z: pos.z + offset[2] },
+      true
+    );
+  }, [fired, offset, root]);
+
+
+  useEffect(() => {
+    if (!ref.current || fired) return;
+
+    ref.current.setLinearDamping(2);
 
     if (target?.current) {
       const pos = target.current.translation();
-      const impulse = new Vector3(pos.x, pos.y, pos.z).normalize();
-      impulse.set(impulse.x, 0.15, impulse.z).multiplyScalar(20);
+      const vel = new Vector3(pos.x, pos.y, pos.z)
+        .normalize()
+        .multiplyScalar(40)
+        .add({ x: 0, y: 30, z: 0 });
 
-      ref.current.applyImpulse(impulse, true);
+      ref.current.setLinvel(vel, true);
     }
 
-    setTimeout(() => setFired(true), 5000);
-  }, [beat, fired, target]);
-
-  const position = useMemo<Vector3Like>(() => {
-    if (!root.current) return [0, 0, 0];
-
-    const pos = root.current.translation();
-    const offset = [-2, 2, 0];
-
-    return [pos.x + offset[0], pos.y + offset[1], pos.z + offset[2]];
-  }, [root]);
+    setFired(true);
+    setTimeout(() => setVisible(false), 5000);
+  }, [fired, target, visible]);
 
   return (
-    !fired && (
-      <RigidBody colliders="ball" density={0.5} position={position} ref={ref}>
+    visible && (
+      <RigidBody colliders="cuboid" density={0.5} ref={ref}>
         <CameraFollower>
           <mesh
             geometry={nodes.heart_teamRed.geometry}
@@ -72,4 +81,4 @@ export const HeartShot = function HeartShot({
       </RigidBody>
     )
   );
-};
+}

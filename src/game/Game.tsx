@@ -53,7 +53,6 @@ export function Game(): JSX.Element {
   const alive = useAppStore(state => state.alive);
 
   const player = useRef<RapierRigidBody>(null);
-  const miku = useRef<RapierRigidBody>(null);
 
   return (
     <>
@@ -105,9 +104,14 @@ export function Game(): JSX.Element {
                 position={[0, -8, 0]}
                 scale={0.2}
                 rotation={[0, -Math.PI / 2, 0]}
-                ref={miku}
               />
-              <HeartCannon root={miku} target={player} shotNum={1} />
+              <HeartCannon
+                target={player}
+                shotNum={1}
+                position={[-17, -8, -8]}
+                rotation={[0, -Math.PI / 2, 0]}
+                scale={0.1}
+              />
 
               {alive && (
                 <Player
