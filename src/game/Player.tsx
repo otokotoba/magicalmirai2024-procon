@@ -16,6 +16,10 @@ import { HeartShot } from './HeartShot';
 import { useAppStore } from '../stores/AppStoreProvider';
 import { withinRange } from '../utils';
 
+const BEAT_RANGE = 50;
+const SCORE_ON_PERFECT = 100;
+const SCORE_ON_GOOD = 50;
+
 export const KEYMAP: KeyboardControlsEntry[] = [
   { name: 'forward', keys: ['ArrowUp', 'KeyW'] },
   { name: 'backward', keys: ['ArrowDown', 'KeyS'] },
@@ -50,6 +54,26 @@ export const Player = forwardRef<RapierRigidBody, EcctrlProps>(
     useImperativeHandle(fref, () => player.current);
 
     const [keys, setKeys] = useState<string[]>([]);
+    const [clickTime, setClickTime] = useState(-1);
+    const [
+      playing,
+      beat,
+      score,
+      setTotalScore,
+      setTimeDiff,
+      increasePerfectCount,
+      increaseGoodCount,
+      increaseBadCount,
+    ] = useAppStore(state => [
+      state.playing,
+      state.beat,
+      state.score,
+      state.setTotalScore,
+      state.setTimeDiff,
+      state.increasePerfectCount,
+      state.increaseGoodCount,
+      state.increaseBadCount,
+    ]);
 
     useEffect(() => {
       const handleClick: Parameters<
@@ -58,6 +82,10 @@ export const Player = forwardRef<RapierRigidBody, EcctrlProps>(
         if (!document.pointerLockElement) return;
 
         setKeys(prev => [...prev, `${new Date().getTime()}`]);
+
+        if (clickTime < 0 && playing) {
+          setClickTime(new Date().getTime());
+        }
       };
 
       window.addEventListener('click', handleClick);
@@ -65,6 +93,25 @@ export const Player = forwardRef<RapierRigidBody, EcctrlProps>(
       return () => {
         window.removeEventListener('click', handleClick);
       };
+    });
+
+    useFrame(() => {
+      if (beat.startTime < 0 || clickTime < 0) return;
+
+      console.log(score, clickTime - beat.startTime);
+
+      if (Math.abs(clickTime - beat.startTime) <= BEAT_RANGE) {
+        setTotalScore(SCORE_ON_PERFECT);
+        increasePerfectCount();
+      } else if (Math.abs(clickTime - beat.startTime) <= BEAT_RANGE * 2) {
+        setTotalScore(SCORE_ON_GOOD);
+        increaseGoodCount();
+      } else {
+        increaseBadCount();
+      }
+
+      setTimeDiff(clickTime - beat.startTime);
+      setClickTime(-1);
     });
 
     const camera = useThree(state => state.camera);

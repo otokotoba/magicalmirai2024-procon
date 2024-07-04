@@ -91,9 +91,15 @@ export function Player(): JSX.Element {
           beat.startTime < withDelata &&
           withDelata - beat.startTime < TIME_DELTA * 4
         ) {
-          setBeat(true);
+          setBeat({
+            startTime: Math.floor(
+              new Date().getTime() - (withDelata - beat.startTime)
+            ),
+            globalIndex: beat.index,
+            localIndex: beat.position,
+          });
         } else {
-          setBeat(false);
+          setBeat({ startTime: -1, globalIndex: -1, localIndex: -1 });
         }
       },
     };

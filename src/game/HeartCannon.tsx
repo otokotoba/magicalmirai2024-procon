@@ -41,7 +41,7 @@ export function HeartCannon({
   const beat = useAppStore(state => state.beat);
 
   useEffect(() => {
-    if (beat) {
+    if (beat.startTime > 0) {
       const now = new Date().getTime();
       setKeys(prev => [
         ...prev,
