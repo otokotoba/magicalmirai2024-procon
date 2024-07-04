@@ -1,5 +1,6 @@
 import { Box, BoxProps, styled, Typography } from '@mui/material';
 
+import { notoSansJP } from '../app/font';
 import { Game } from '../game/Game';
 import { useAppStore } from '../stores/AppStoreProvider';
 
@@ -31,6 +32,7 @@ export function PlayerScreen(): JSX.Element {
             left: '50%',
             transform: 'translateX(-50%)',
           }}
+          className={notoSansJP.className}
         >
           <Typography variant="body1" sx={{ fontFamily: 'inherit' }}>
             {lyrics.phrase}
