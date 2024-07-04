@@ -16,7 +16,7 @@ import { HeartShot } from './HeartShot';
 import { useAppStore } from '../stores/AppStoreProvider';
 import { withinRange } from '../utils';
 
-const BEAT_RANGE = 50;
+export const BEAT_RANGE = 50;
 const SCORE_ON_PERFECT = 100;
 const SCORE_ON_GOOD = 50;
 
@@ -58,7 +58,6 @@ export const Player = forwardRef<RapierRigidBody, EcctrlProps>(
     const [
       playing,
       beat,
-      score,
       setTotalScore,
       setTimeDiff,
       increasePerfectCount,
@@ -67,7 +66,6 @@ export const Player = forwardRef<RapierRigidBody, EcctrlProps>(
     ] = useAppStore(state => [
       state.playing,
       state.beat,
-      state.score,
       state.setTotalScore,
       state.setTimeDiff,
       state.increasePerfectCount,
@@ -98,19 +96,19 @@ export const Player = forwardRef<RapierRigidBody, EcctrlProps>(
     useFrame(() => {
       if (beat.startTime < 0 || clickTime < 0) return;
 
-      console.log(score, clickTime - beat.startTime);
+      const timeDiff = clickTime - beat.startTime;
 
-      if (Math.abs(clickTime - beat.startTime) <= BEAT_RANGE) {
+      if (Math.abs(timeDiff) <= BEAT_RANGE) {
         setTotalScore(SCORE_ON_PERFECT);
         increasePerfectCount();
-      } else if (Math.abs(clickTime - beat.startTime) <= BEAT_RANGE * 2) {
+      } else if (Math.abs(timeDiff) <= BEAT_RANGE * 2) {
         setTotalScore(SCORE_ON_GOOD);
         increaseGoodCount();
       } else {
         increaseBadCount();
       }
 
-      setTimeDiff(clickTime - beat.startTime);
+      setTimeDiff(timeDiff);
       setClickTime(-1);
     });
 

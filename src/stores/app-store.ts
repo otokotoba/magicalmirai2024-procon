@@ -67,7 +67,7 @@ export const defaultInitState: AppState = {
   },
   score: {
     total: 0,
-    timeDiff: 0,
+    timeDiff: Infinity,
     perfect: 0,
     good: 0,
     bad: 0,
@@ -105,6 +105,6 @@ export const createAppStore = (
     increaseGoodCount: () =>
       set(({ score }) => ({ score: { ...score, good: score.good + 1 } })),
     increaseBadCount: () =>
-      set(({ score }) => ({ score: { ...score, bad: score.good + 1 } })),
+      set(({ score }) => ({ score: { ...score, bad: score.bad + 1 } })),
   }));
 };

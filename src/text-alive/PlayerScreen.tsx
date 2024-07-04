@@ -2,6 +2,7 @@ import { Box, BoxProps, styled, Typography } from '@mui/material';
 
 import { notoSansJP } from '../app/font';
 import { Game } from '../game/Game';
+import { Score } from '../game/Score';
 import { useAppStore } from '../stores/AppStoreProvider';
 
 const CaptionContainer = styled(Box)<BoxProps>(({ theme }) => ({
@@ -24,6 +25,11 @@ export function PlayerScreen(): JSX.Element {
       >
         <Game />
       </Box>
+
+      <Box sx={{ position: 'absolute', bottom: '8px' }}>
+        <Score />
+      </Box>
+
       {showLyrics && lyrics.phrase !== '' && (
         <CaptionContainer
           sx={{
