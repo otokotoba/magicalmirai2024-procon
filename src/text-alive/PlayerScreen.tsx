@@ -2,6 +2,7 @@ import { Box, BoxProps, styled, Typography } from '@mui/material';
 
 import { notoSansJP } from '../app/font';
 import { Game } from '../game/Game';
+import { Result } from '../game/Result';
 import { Score } from '../game/Score';
 import { useAppStore } from '../stores/AppStoreProvider';
 
@@ -29,6 +30,8 @@ export function PlayerScreen(): JSX.Element {
       <Box sx={{ position: 'absolute', bottom: '8px' }}>
         <Score />
       </Box>
+
+      <Result />
 
       {showLyrics && lyrics.phrase !== '' && (
         <CaptionContainer

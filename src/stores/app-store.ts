@@ -6,6 +6,7 @@ export type AppState = {
   player?: Player;
   loading: boolean;
   playing: boolean;
+  done: boolean;
   lyrics: {
     phrase: string;
     word: string;
@@ -33,6 +34,7 @@ export type AppActions = {
   setPlayer: (player: AppState['player']) => void;
   setLoading: (loading: AppState['loading']) => void;
   setPlaying: (playing: AppState['playing']) => void;
+  setDone: (done: AppState['done']) => void;
   setLyrics: (text: AppState['lyrics']) => void;
   setProgress: (progress: AppState['progress']) => void;
   setShowLyrics: (showLyrics: AppState['showLyrics']) => void;
@@ -45,6 +47,7 @@ export type AppActions = {
   increasePerfectCount: () => void;
   increaseGoodCount: () => void;
   increaseBadCount: () => void;
+  resetStore: () => void;
 };
 
 export type AppStore = AppState & AppActions;
@@ -52,6 +55,7 @@ export type AppStore = AppState & AppActions;
 export const defaultInitState: AppState = {
   loading: true,
   playing: false,
+  done: false,
   lyrics: {
     phrase: '',
     word: '',
@@ -82,6 +86,7 @@ export const createAppStore = (
     setPlayer: player => set(() => ({ player })),
     setLoading: loading => set(() => ({ loading })),
     setPlaying: playing => set(() => ({ playing })),
+    setDone: done => set(() => ({ done })),
     setLyrics: lyrics => set(() => ({ lyrics })),
     setProgress: progress => set(() => ({ progress })),
     setShowLyrics: showLyrics => set(() => ({ showLyrics })),
@@ -106,5 +111,7 @@ export const createAppStore = (
       set(({ score }) => ({ score: { ...score, good: score.good + 1 } })),
     increaseBadCount: () =>
       set(({ score }) => ({ score: { ...score, bad: score.bad + 1 } })),
+
+    resetStore: () => set(initState),
   }));
 };

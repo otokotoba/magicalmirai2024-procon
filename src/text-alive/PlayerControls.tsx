@@ -23,17 +23,24 @@ import { useCallback } from 'react';
 import { useAppStore } from '../stores/AppStoreProvider';
 
 export function PlayerControls(): JSX.Element {
-  const player = useAppStore(state => state.player);
-  const loading = useAppStore(state => state.loading);
-  const [playing, setPlaying] = useAppStore(state => [
+  const [
+    player,
+    loading,
+    playing,
+    setPlaying,
+    done,
+    progress,
+    setProgress,
+    showLyrics,
+    setShowLyrics,
+  ] = useAppStore(state => [
+    state.player,
+    state.loading,
     state.playing,
     state.setPlaying,
-  ]);
-  const [progress, setProgress] = useAppStore(state => [
+    state.done,
     state.progress,
     state.setProgress,
-  ]);
-  const [showLyrics, setShowLyrics] = useAppStore(state => [
     state.showLyrics,
     state.setShowLyrics,
   ]);
@@ -55,9 +62,12 @@ export function PlayerControls(): JSX.Element {
       if (!player) return;
 
       setProgress(value as number);
+
+      player.startVideoSeek();
       player.requestMediaSeek(
         player.video.duration * ((value as number) / 100)
       );
+      player.endVideoSeek();
     },
     [player, setProgress]
   );
@@ -91,7 +101,7 @@ export function PlayerControls(): JSX.Element {
         <Grid container alignItems="center">
           <Grid item xs={12}>
             <Slider
-              disabled={loading}
+              disabled={loading || done}
               value={progress}
               sx={{
                 color: '#fff',
@@ -117,7 +127,7 @@ export function PlayerControls(): JSX.Element {
                 />
               )}
               <IconButton
-                disabled={loading}
+                disabled={loading || done}
                 color="inherit"
                 onClick={handlePlay}
               >

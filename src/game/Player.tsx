@@ -17,8 +17,8 @@ import { useAppStore } from '../stores/AppStoreProvider';
 import { withinRange } from '../utils';
 
 export const BEAT_RANGE = 50;
-const SCORE_ON_PERFECT = 100;
-const SCORE_ON_GOOD = 50;
+export const SCORE_ON_PERFECT = 100;
+export const SCORE_ON_GOOD = 50;
 
 export const KEYMAP: KeyboardControlsEntry[] = [
   { name: 'forward', keys: ['ArrowUp', 'KeyW'] },

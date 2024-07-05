@@ -20,6 +20,7 @@ export function Player(): JSX.Element {
     setPlayer,
     setLoading,
     setPlaying,
+    setDone,
     setLyrics,
     setBeat,
     setProgress,
@@ -28,6 +29,7 @@ export function Player(): JSX.Element {
     state.setPlayer,
     state.setLoading,
     state.setPlaying,
+    state.setDone,
     state.setLyrics,
     state.setBeat,
     state.setProgress,
@@ -70,6 +72,7 @@ export function Player(): JSX.Element {
 
         if (progress === 100) {
           setPlaying(false);
+          setDone(true);
         }
 
         const withDelata = now + TIME_DELTA;
@@ -114,7 +117,15 @@ export function Player(): JSX.Element {
     return () => {
       player.removeListener(listener);
     };
-  }, [setBeat, setLoading, setLyrics, setPlayer, setPlaying, setProgress]);
+  }, [
+    setBeat,
+    setDone,
+    setLoading,
+    setLyrics,
+    setPlayer,
+    setPlaying,
+    setProgress,
+  ]);
 
   const stackRef = useRef<HTMLDivElement | null>(null);
   const screenRef = useRef<HTMLDivElement | null>(null);

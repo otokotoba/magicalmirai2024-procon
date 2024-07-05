@@ -14,8 +14,6 @@ export function Score(): JSX.Element {
   const score = useAppStore(state => state.score);
 
   const status = useMemo(() => {
-    console.log(score);
-
     if (score.timeDiff === Infinity) {
       return '';
     } else if (Math.abs(score.timeDiff) <= BEAT_RANGE) {
