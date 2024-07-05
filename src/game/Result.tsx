@@ -22,15 +22,23 @@ const NotoSansJP = styled('span')(() => ({
 const Teko = styled(Typography)(() => teko.style);
 
 export function Result(): JSX.Element {
-  const [done, score, resetStore, setLoading, player, setShowControls] =
-    useAppStore(state => [
-      state.done,
-      state.score,
-      state.resetStore,
-      state.setLoading,
-      state.player,
-      state.setShowControls,
-    ]);
+  const [
+    done,
+    score,
+    resetStore,
+    setLoading,
+    player,
+    setShowControls,
+    toggleShowDescription,
+  ] = useAppStore(state => [
+    state.done,
+    state.score,
+    state.resetStore,
+    state.setLoading,
+    state.player,
+    state.setShowControls,
+    state.toggleShowDescription,
+  ]);
 
   useEffect(() => {
     if (done) {
@@ -48,7 +56,8 @@ export function Result(): JSX.Element {
 
     resetStore();
     setLoading(false);
-  }, [player, resetStore, setLoading]);
+    toggleShowDescription();
+  }, [player, resetStore, setLoading, toggleShowDescription]);
 
   return (
     <Dialog

@@ -1,6 +1,7 @@
 'use client';
 
 import {
+  HelpRounded,
   PlayArrowRounded,
   StopRounded,
   Subtitles,
@@ -33,6 +34,7 @@ export function PlayerControls(): JSX.Element {
     setProgress,
     showLyrics,
     setShowLyrics,
+    toggleShowDescription,
   ] = useAppStore(state => [
     state.player,
     state.loading,
@@ -43,6 +45,7 @@ export function PlayerControls(): JSX.Element {
     state.setProgress,
     state.showLyrics,
     state.setShowLyrics,
+    state.toggleShowDescription,
   ]);
 
   const handlePlay = useCallback(() => {
@@ -95,6 +98,10 @@ export function PlayerControls(): JSX.Element {
     else setShowLyrics(true);
   }, [setShowLyrics, showLyrics]);
 
+  const handleShowDescription = useCallback(() => {
+    toggleShowDescription();
+  }, [toggleShowDescription]);
+
   return (
     <AppBar color="info" sx={{ position: 'static' }}>
       <Toolbar sx={{ py: 1 }} variant="dense">
@@ -143,6 +150,12 @@ export function PlayerControls(): JSX.Element {
               onClick={handleShowLirycs}
             >
               {showLyrics ? <SubtitlesOff /> : <Subtitles />}
+            </IconButton>
+          </Grid>
+
+          <Grid item>
+            <IconButton color="inherit" onClick={handleShowDescription}>
+              <HelpRounded />
             </IconButton>
           </Grid>
 

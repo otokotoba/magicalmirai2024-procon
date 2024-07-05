@@ -14,6 +14,7 @@ export type AppState = {
   progress: number;
   showLyrics: boolean;
   showControls: boolean;
+  showDescription: boolean;
   canvasHeight?: number;
   alive: boolean;
   beat: {
@@ -39,6 +40,7 @@ export type AppActions = {
   setProgress: (progress: AppState['progress']) => void;
   setShowLyrics: (showLyrics: AppState['showLyrics']) => void;
   setShowControls: (showControls: AppState['showControls']) => void;
+  toggleShowDescription: () => void;
   setCanvasHeight: (canvasHeight: AppState['canvasHeight']) => void;
   setAlive: (alive: AppState['alive']) => void;
   setBeat: (beat: AppState['beat']) => void;
@@ -63,6 +65,7 @@ export const defaultInitState: AppState = {
   progress: 0,
   showLyrics: true,
   showControls: true,
+  showDescription: true,
   alive: true,
   beat: {
     startTime: -1,
@@ -91,6 +94,8 @@ export const createAppStore = (
     setProgress: progress => set(() => ({ progress })),
     setShowLyrics: showLyrics => set(() => ({ showLyrics })),
     setShowControls: showControls => set(() => ({ showControls })),
+    toggleShowDescription: () =>
+      set(({ showDescription }) => ({ showDescription: !showDescription })),
     setCanvasHeight: canvasHeight => set(() => ({ canvasHeight })),
     setAlive: alive => set(() => ({ alive })),
 

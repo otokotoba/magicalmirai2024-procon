@@ -10,6 +10,7 @@ import {
 
 import { PlayerControls } from './PlayerControls';
 import { PlayerScreen } from './PlayerScreen';
+import { Description } from '../game/Description';
 import { useAppStore } from '../stores/AppStoreProvider';
 
 const SONG_URL = 'https://piapro.jp/t/xEA7/20240202002556';
@@ -150,6 +151,7 @@ export function Player(): JSX.Element {
         <PlayerScreen />
       </Box>
       <Box ref={controlsRef}>{showControls && <PlayerControls />}</Box>
+      <Description />
     </Stack>
   );
 }
