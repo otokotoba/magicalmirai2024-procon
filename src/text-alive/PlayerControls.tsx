@@ -149,7 +149,7 @@ export function PlayerControls(): JSX.Element {
               color="inherit"
               onClick={handleShowLirycs}
             >
-              {showLyrics ? <SubtitlesOff /> : <Subtitles />}
+              {showLyrics ? <Subtitles /> : <SubtitlesOff />}
             </IconButton>
           </Grid>
 

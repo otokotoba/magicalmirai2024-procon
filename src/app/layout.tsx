@@ -6,7 +6,7 @@ import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
 
-import { AppStoreProvider } from '@/stores/AppStoreProvider';
+import { AppStoreProvider } from '../stores/AppStoreProvider';
 
 export const metadata: Metadata = {
   title: 'Create Next App',
