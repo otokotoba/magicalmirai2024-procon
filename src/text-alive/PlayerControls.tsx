@@ -33,8 +33,9 @@ export function PlayerControls(): JSX.Element {
     progress,
     setProgress,
     showLyrics,
-    setShowLyrics,
+    toggleShowLyrics,
     toggleShowDescription,
+    toggleDone,
   ] = useAppStore(state => [
     state.player,
     state.loading,
@@ -44,8 +45,9 @@ export function PlayerControls(): JSX.Element {
     state.progress,
     state.setProgress,
     state.showLyrics,
-    state.setShowLyrics,
+    state.toggleShowLyrics,
     state.toggleShowDescription,
+    state.toggleDone,
   ]);
 
   const handlePlay = useCallback(() => {
@@ -64,15 +66,20 @@ export function PlayerControls(): JSX.Element {
     (e: Event, value: number | number[]) => {
       if (!player) return;
 
-      setProgress(value as number);
-
       player.startVideoSeek();
       player.requestMediaSeek(
         player.video.duration * ((value as number) / 100)
       );
       player.endVideoSeek();
+
+      const progress = value as number;
+      setProgress(progress);
+
+      if (progress === 100 && !playing) {
+        toggleDone();
+      }
     },
-    [player, setProgress]
+    [player, playing, setProgress, toggleDone]
   );
 
   const formatSliderValue = useCallback(
@@ -94,9 +101,8 @@ export function PlayerControls(): JSX.Element {
   );
 
   const handleShowLirycs = useCallback(() => {
-    if (showLyrics) setShowLyrics(false);
-    else setShowLyrics(true);
-  }, [setShowLyrics, showLyrics]);
+    toggleShowLyrics();
+  }, [toggleShowLyrics]);
 
   const handleShowDescription = useCallback(() => {
     toggleShowDescription();

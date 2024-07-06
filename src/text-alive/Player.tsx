@@ -19,18 +19,18 @@ const TIME_DELTA = 50;
 export function Player(): JSX.Element {
   const [
     setPlayer,
-    setLoading,
+    toggleLoading,
     setPlaying,
-    setDone,
+    toggleDone,
     setLyrics,
     setBeat,
     setProgress,
     showControls,
   ] = useAppStore(state => [
     state.setPlayer,
-    state.setLoading,
+    state.toggleLoading,
     state.setPlaying,
-    state.setDone,
+    state.toggleDone,
     state.setLyrics,
     state.setBeat,
     state.setProgress,
@@ -65,7 +65,7 @@ export function Player(): JSX.Element {
     const playerEventListener: PlayerEventListener = {
       onTimerReady: () => {
         setPlayer(player);
-        setLoading(false);
+        toggleLoading();
       },
       onTimeUpdate: now => {
         const progress = (now / player.video.duration) * 100;
@@ -73,7 +73,7 @@ export function Player(): JSX.Element {
 
         if (progress === 100) {
           setPlaying(false);
-          setDone(true);
+          toggleDone();
         }
 
         const withDelata = now + TIME_DELTA;
@@ -120,8 +120,8 @@ export function Player(): JSX.Element {
     };
   }, [
     setBeat,
-    setDone,
-    setLoading,
+    toggleDone,
+    toggleLoading,
     setLyrics,
     setPlayer,
     setPlaying,

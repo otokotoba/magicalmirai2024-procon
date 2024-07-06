@@ -33,12 +33,12 @@ export type AppState = {
 
 export type AppActions = {
   setPlayer: (player: AppState['player']) => void;
-  setLoading: (loading: AppState['loading']) => void;
+  toggleLoading: () => void;
   setPlaying: (playing: AppState['playing']) => void;
-  setDone: (done: AppState['done']) => void;
+  toggleDone: () => void;
   setLyrics: (text: AppState['lyrics']) => void;
   setProgress: (progress: AppState['progress']) => void;
-  setShowLyrics: (showLyrics: AppState['showLyrics']) => void;
+  toggleShowLyrics: () => void;
   setShowControls: (showControls: AppState['showControls']) => void;
   toggleShowDescription: () => void;
   setCanvasHeight: (canvasHeight: AppState['canvasHeight']) => void;
@@ -87,12 +87,13 @@ export const createAppStore = (
   return createStore<AppStore>()(set => ({
     ...initState,
     setPlayer: player => set(() => ({ player })),
-    setLoading: loading => set(() => ({ loading })),
+    toggleLoading: () => set(({ loading }) => ({ loading: !loading })),
     setPlaying: playing => set(() => ({ playing })),
-    setDone: done => set(() => ({ done })),
+    toggleDone: () => set(({ done }) => ({ done: !done })),
     setLyrics: lyrics => set(() => ({ lyrics })),
     setProgress: progress => set(() => ({ progress })),
-    setShowLyrics: showLyrics => set(() => ({ showLyrics })),
+    toggleShowLyrics: () =>
+      set(({ showLyrics }) => ({ showLyrics: !showLyrics })),
     setShowControls: showControls => set(() => ({ showControls })),
     toggleShowDescription: () =>
       set(({ showDescription }) => ({ showDescription: !showDescription })),

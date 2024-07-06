@@ -11,21 +11,19 @@ import { Stage } from './Stage';
 import { useAppStore } from '../stores/AppStoreProvider';
 
 export function Game(): JSX.Element {
-  const setshowControls = useAppStore(state => state.setShowControls);
-  const handleLock = useCallback(
-    () => setshowControls(false),
-    [setshowControls]
-  );
-  const handleUnLock = useCallback(
-    () => setshowControls(true),
-    [setshowControls]
+  const [setShowControls, canvasHeight, setCanvasHeight] = useAppStore(
+    state => [state.setShowControls, state.canvasHeight, state.setCanvasHeight]
   );
 
+  const handleLock = useCallback(() => {
+    setShowControls(false);
+  }, [setShowControls]);
+
+  const handleUnLock = useCallback(() => {
+    setShowControls(true);
+  }, [setShowControls]);
+
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
-  const [canvasHeight, setCanvasHeight] = useAppStore(state => [
-    state.canvasHeight,
-    state.setCanvasHeight,
-  ]);
 
   useEffect(() => {
     if (!canvasRef.current) return;

@@ -26,7 +26,7 @@ export function Result(): JSX.Element {
     done,
     score,
     resetStore,
-    setLoading,
+    toggleLoading,
     player,
     setShowControls,
     toggleShowDescription,
@@ -34,7 +34,7 @@ export function Result(): JSX.Element {
     state.done,
     state.score,
     state.resetStore,
-    state.setLoading,
+    state.toggleLoading,
     state.player,
     state.setShowControls,
     state.toggleShowDescription,
@@ -55,9 +55,9 @@ export function Result(): JSX.Element {
     player.endVideoSeek();
 
     resetStore();
-    setLoading(false);
+    toggleLoading();
     toggleShowDescription();
-  }, [player, resetStore, setLoading, toggleShowDescription]);
+  }, [player, resetStore, toggleLoading, toggleShowDescription]);
 
   return (
     <Dialog
