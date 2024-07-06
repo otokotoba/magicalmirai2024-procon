@@ -166,7 +166,7 @@ function Page1(): JSX.Element {
       </Divider>
 
       <Stack direction="row" justifyContent="space-between">
-        <Teko variant="h4">Left Click</Teko>
+        <Teko variant="h4">Click</Teko>
         <NotoSansJP variant="h6">ハートを投げる</NotoSansJP>
       </Stack>
       <Stack direction="row" justifyContent="space-between">

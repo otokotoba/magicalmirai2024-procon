@@ -106,7 +106,12 @@ export function PlayerControls(): JSX.Element {
 
   const handleShowDescription = useCallback(() => {
     toggleShowDescription();
-  }, [toggleShowDescription]);
+
+    if (player.isPlaying) {
+      player.requestPause();
+      setPlaying(false);
+    }
+  }, [player, setPlaying, toggleShowDescription]);
 
   return (
     <AppBar color="info" sx={{ position: 'static' }}>
