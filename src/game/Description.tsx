@@ -15,7 +15,7 @@ import {
   Typography,
   useTheme,
 } from '@mui/material';
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 
 import { BEAT_RANGE, SCORE_ON_GOOD, SCORE_ON_PERFECT } from './Player';
 import { notoSansJP, teko } from '../app/font';
@@ -47,6 +47,15 @@ export function Description(): JSX.Element {
     toggleShowDescription();
   }, [toggleShowDescription]);
 
+  const content = useRef<HTMLDivElement>(null);
+  const [height, setHeight] = useState('auto');
+
+  useEffect(() => {
+    if (!content.current) return;
+
+    setHeight(`${content.current.getBoundingClientRect().height}px`);
+  }, []);
+
   return (
     showDiscription && (
       <>
@@ -77,7 +86,7 @@ export function Description(): JSX.Element {
               sx={{
                 backgroundColor: 'rgba(255, 255, 255, 0.75)',
                 width: '100%',
-                maxWidth: '900px',
+                maxWidth: '800px',
               }}
             >
               <DialogTitle>
@@ -86,7 +95,9 @@ export function Description(): JSX.Element {
                 </NotoSansJP>
               </DialogTitle>
 
-              <DialogContent dividers>{pages[page]}</DialogContent>
+              <DialogContent dividers ref={content} sx={{ height }}>
+                {pages[page]}
+              </DialogContent>
               <DialogActions sx={{ display: 'block' }}>
                 <Stack spacing={2}>
                   <ButtonGroup fullWidth>
@@ -122,15 +133,14 @@ export function Description(): JSX.Element {
                     </IconButton>
                   </ButtonGroup>
 
-                  {page === pages.length - 1 && (
-                    <Button
-                      variant="contained"
-                      disableElevation
-                      onClick={handleStart}
-                    >
-                      スタート
-                    </Button>
-                  )}
+                  <Button
+                    disabled={page < pages.length - 1}
+                    variant="contained"
+                    disableElevation
+                    onClick={handleStart}
+                  >
+                    スタート
+                  </Button>
                 </Stack>
               </DialogActions>
             </Paper>
