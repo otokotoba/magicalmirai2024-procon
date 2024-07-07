@@ -14,9 +14,13 @@ import {
 import { toBlob } from 'html-to-image';
 import { useCallback, useEffect, useRef, useState } from 'react';
 
-import { SCORE_ON_GOOD, SCORE_ON_PERFECT } from './Player';
 import { notoSansJP, teko } from '../app/font';
-import { SNACKBAR_DURATION, X_TEXT } from '../const';
+import {
+  SCORE_ON_GOOD,
+  SCORE_ON_PERFECT,
+  SNACKBAR_DURATION,
+  X_TEXT,
+} from '../const';
 import { useAppStore } from '../stores/AppStoreProvider';
 import { ExtLink, RowStack, XIcon } from '../UtilComponents';
 

@@ -10,11 +10,9 @@ import {
 
 import { PlayerControls } from './PlayerControls';
 import { PlayerScreen } from './PlayerScreen';
+import { SONG_URL, TIME_DELTA } from '../const';
 import { Description } from '../game/Description';
 import { useAppStore } from '../stores/AppStoreProvider';
-
-const SONG_URL = 'https://piapro.jp/t/xEA7/20240202002556';
-const TIME_DELTA = 50;
 
 export function Player(): JSX.Element {
   const [

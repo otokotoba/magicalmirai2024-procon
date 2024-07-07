@@ -1,8 +1,8 @@
 import { Paper, Stack, styled, Typography } from '@mui/material';
 import { useMemo } from 'react';
 
-import { BEAT_RANGE } from './Player';
 import { teko } from '../app/font';
+import { BEAT_RANGE } from '../const';
 import { useAppStore } from '../stores/AppStoreProvider';
 
 const ScoreTypography = styled(Typography)(() => ({

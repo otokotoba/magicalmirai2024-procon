@@ -17,8 +17,8 @@ import {
 } from '@mui/material';
 import { useCallback, useEffect, useRef, useState } from 'react';
 
-import { BEAT_RANGE, SCORE_ON_GOOD, SCORE_ON_PERFECT } from './Player';
 import { notoSansJP, teko } from '../app/font';
+import { BEAT_RANGE, SCORE_ON_GOOD, SCORE_ON_PERFECT } from '../const';
 import { useAppStore } from '../stores/AppStoreProvider';
 import { ExtLink, RowStack } from '../UtilComponents';
 

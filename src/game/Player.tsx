@@ -1,4 +1,4 @@
-import { KeyboardControls, KeyboardControlsEntry } from '@react-three/drei';
+import { KeyboardControls } from '@react-three/drei';
 import { useFrame, useThree } from '@react-three/fiber';
 import { RapierRigidBody } from '@react-three/rapier';
 import Ecctrl, { EcctrlProps } from 'ecctrl';
@@ -13,21 +13,9 @@ import {
 import { Vector3 } from 'three';
 
 import { HeartShot } from './HeartShot';
+import { BEAT_RANGE, KEYMAP, SCORE_ON_GOOD, SCORE_ON_PERFECT } from '../const';
 import { useAppStore } from '../stores/AppStoreProvider';
 import { withinRange } from '../utils';
-
-export const BEAT_RANGE = 50;
-export const SCORE_ON_PERFECT = 100;
-export const SCORE_ON_GOOD = 50;
-
-export const KEYMAP: KeyboardControlsEntry[] = [
-  { name: 'forward', keys: ['ArrowUp', 'KeyW'] },
-  { name: 'backward', keys: ['ArrowDown', 'KeyS'] },
-  { name: 'leftward', keys: ['ArrowLeft', 'KeyA'] },
-  { name: 'rightward', keys: ['ArrowRight', 'KeyD'] },
-  { name: 'jump', keys: ['Space'] },
-  { name: 'run', keys: ['Shift'] },
-];
 
 export const Player = forwardRef<RapierRigidBody, EcctrlProps>(
   // eslint-disable-next-line @typescript-eslint/typedef
