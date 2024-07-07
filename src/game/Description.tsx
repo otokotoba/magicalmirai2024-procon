@@ -11,6 +11,7 @@ import {
   IconButton,
   Paper,
   Stack,
+  StackProps,
   styled,
   Typography,
   useTheme,
@@ -20,12 +21,15 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import { BEAT_RANGE, SCORE_ON_GOOD, SCORE_ON_PERFECT } from './Player';
 import { notoSansJP, teko } from '../app/font';
 import { useAppStore } from '../stores/AppStoreProvider';
+import { RowStack } from '../UtilComponents';
 
 const NotoSansJP = styled(Typography)(() => notoSansJP.style);
 const Teko = styled(Typography)(() => teko.style);
 
-const titles = ['操作方法', 'ゲームの説明'];
-const pages = [<Page1 key={0} />, <Page2 key={1} />];
+const pages = [
+  { title: '操作方法', component: <HowToControl key={0} /> },
+  { title: 'ゲームの説明', component: <GameDescription key={1} /> },
+];
 
 export function Description(): JSX.Element {
   const [showDiscription, toggleShowDescription] = useAppStore(state => [
@@ -90,14 +94,15 @@ export function Description(): JSX.Element {
               }}
             >
               <DialogTitle>
-                <NotoSansJP variant="h5" sx={{ fontWeight: '600' }}>
-                  {titles[page]}
+                <NotoSansJP variant="h5" fontWeight={600}>
+                  {pages[page].title}
                 </NotoSansJP>
               </DialogTitle>
 
               <DialogContent dividers ref={content} sx={{ height }}>
-                {pages[page]}
+                {pages[page].component}
               </DialogContent>
+
               <DialogActions sx={{ display: 'block' }}>
                 <Stack spacing={2}>
                   <ButtonGroup fullWidth>
@@ -151,50 +156,55 @@ export function Description(): JSX.Element {
   );
 }
 
-function Page1(): JSX.Element {
+function HowToControl(): JSX.Element {
   return (
     <Stack spacing={1}>
-      <Stack direction="row" justifyContent="space-between">
+      <RowStack>
         <Teko variant="h4">WASD</Teko>
         <NotoSansJP variant="h6">移動</NotoSansJP>
-      </Stack>
-      <Stack direction="row" justifyContent="space-between">
+      </RowStack>
+
+      <RowStack>
         <Teko variant="h4">Shift</Teko>
         <NotoSansJP variant="h6">ダッシュ</NotoSansJP>
-      </Stack>
-      <Stack direction="row" justifyContent="space-between">
+      </RowStack>
+
+      <RowStack>
         <Teko variant="h4">Space</Teko>
         <NotoSansJP variant="h6">ジャンプ</NotoSansJP>
-      </Stack>
-      <Stack direction="row" justifyContent="space-between">
+      </RowStack>
+
+      <RowStack>
         <Teko variant="h4">Click on the Game Screen</Teko>
         <NotoSansJP variant="h6">ポインターロック</NotoSansJP>
-      </Stack>
+      </RowStack>
 
       <Divider textAlign="center" flexItem>
         <NotoSansJP variant="body1">ポインターロック時</NotoSansJP>
       </Divider>
 
-      <Stack direction="row" justifyContent="space-between">
+      <RowStack>
         <Teko variant="h4">Click</Teko>
         <NotoSansJP variant="h6">ハートを投げる</NotoSansJP>
-      </Stack>
-      <Stack direction="row" justifyContent="space-between">
+      </RowStack>
+
+      <RowStack>
         <Teko variant="h4">Scroll</Teko>
         <NotoSansJP variant="h6">視野角の調整</NotoSansJP>
-      </Stack>
-      <Stack direction="row" justifyContent="space-between">
+      </RowStack>
+
+      <RowStack>
         <Teko variant="h4">Escape</Teko>
         <NotoSansJP variant="h6">ポインターロック解除</NotoSansJP>
-      </Stack>
+      </RowStack>
     </Stack>
   );
 }
 
-function Page2(): JSX.Element {
+function GameDescription(): JSX.Element {
   return (
     <NotoSansJP variant="h6">
-      ポインターロック時にリズムに合わせて左クリックすると、得点を稼ぐことができます。
+      ポインターロック時にリズムに合わせてクリックすると、得点を稼ぐことができます。
       ±{BEAT_RANGE}ミリ秒以内は{SCORE_ON_PERFECT}点、±{BEAT_RANGE * 2}
       ミリ秒以内は{SCORE_ON_GOOD}点です。
     </NotoSansJP>

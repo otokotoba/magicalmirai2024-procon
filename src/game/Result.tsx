@@ -13,6 +13,7 @@ import { useCallback, useEffect } from 'react';
 import { SCORE_ON_GOOD, SCORE_ON_PERFECT } from './Player';
 import { notoSansJP, teko } from '../app/font';
 import { useAppStore } from '../stores/AppStoreProvider';
+import { RowStack } from '../UtilComponents';
 
 const NotoSansJP = styled('span')(() => ({
   ...notoSansJP.style,
@@ -73,16 +74,12 @@ export function Result(): JSX.Element {
       </DialogTitle>
 
       <DialogContent dividers>
-        <Stack alignItems="center" spacing={1}>
-          <Stack>
+        <Stack spacing={1}>
+          <Stack alignSelf="center">
             <Teko variant="h1">{score.total}</Teko>
           </Stack>
 
-          <Stack
-            direction="row"
-            justifyContent="space-between"
-            sx={{ width: '100%' }}
-          >
+          <RowStack>
             <Teko variant="h4">PERFECT</Teko>
             <Teko variant="h4">
               {SCORE_ON_PERFECT}
@@ -90,13 +87,9 @@ export function Result(): JSX.Element {
               {score.perfect}
               <NotoSansJP>回</NotoSansJP>
             </Teko>
-          </Stack>
+          </RowStack>
 
-          <Stack
-            direction="row"
-            justifyContent="space-between"
-            sx={{ width: '100%' }}
-          >
+          <RowStack>
             <Teko variant="h4">GOOD</Teko>
             <Teko variant="h4">
               {SCORE_ON_GOOD}
@@ -104,19 +97,15 @@ export function Result(): JSX.Element {
               {score.good}
               <NotoSansJP>回</NotoSansJP>
             </Teko>
-          </Stack>
+          </RowStack>
 
-          <Stack
-            direction="row"
-            justifyContent="space-between"
-            sx={{ width: '100%' }}
-          >
+          <RowStack>
             <Teko variant="h4">BAD</Teko>
             <Teko variant="h4">
               {score.bad}
               <NotoSansJP>回</NotoSansJP>
             </Teko>
-          </Stack>
+          </RowStack>
         </Stack>
       </DialogContent>
       <DialogActions sx={{ display: 'block' }}>
