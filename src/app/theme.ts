@@ -1,6 +1,26 @@
 import { createTheme } from '@mui/material';
 
+declare module '@mui/material/styles' {
+  interface Theme {
+    subPalette: {
+      primary: string;
+      secondary: string;
+    };
+  }
+
+  interface ThemeOptions {
+    subPalette?: {
+      primary?: string;
+      secondary?: string;
+    };
+  }
+}
+
 export const theme = createTheme({
+  subPalette: {
+    primary: '#81d5cd',
+    secondary: '#afc9e7',
+  },
   components: {
     MuiTypography: {
       defaultProps: {
