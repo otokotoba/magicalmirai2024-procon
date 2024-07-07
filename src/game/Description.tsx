@@ -11,7 +11,6 @@ import {
   IconButton,
   Paper,
   Stack,
-  StackProps,
   styled,
   Typography,
   useTheme,
@@ -21,7 +20,7 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import { BEAT_RANGE, SCORE_ON_GOOD, SCORE_ON_PERFECT } from './Player';
 import { notoSansJP, teko } from '../app/font';
 import { useAppStore } from '../stores/AppStoreProvider';
-import { RowStack } from '../UtilComponents';
+import { ExtLink, RowStack } from '../UtilComponents';
 
 const NotoSansJP = styled(Typography)(() => notoSansJP.style);
 const Teko = styled(Typography)(() => teko.style);
@@ -29,6 +28,8 @@ const Teko = styled(Typography)(() => teko.style);
 const pages = [
   { title: '操作方法', component: <HowToControl key={0} /> },
   { title: 'ゲームの説明', component: <GameDescription key={1} /> },
+  { title: 'クレジット', component: <Credits key={2} /> },
+  { title: 'リンク', component: <LinkCollection key={3} /> },
 ];
 
 export function Description(): JSX.Element {
@@ -208,5 +209,127 @@ function GameDescription(): JSX.Element {
       ±{BEAT_RANGE}ミリ秒以内は{SCORE_ON_PERFECT}点、±{BEAT_RANGE * 2}
       ミリ秒以内は{SCORE_ON_GOOD}点です。
     </NotoSansJP>
+  );
+}
+
+function Credits(): JSX.Element {
+  return (
+    <Stack spacing={1}>
+      <RowStack>
+        <NotoSansJP variant="h5" fontWeight={500}>
+          TextAlive App API
+        </NotoSansJP>
+        <NotoSansJP variant="h6">
+          <ExtLink href="https://developer.textalive.jp/">ホームページ</ExtLink>
+        </NotoSansJP>
+      </RowStack>
+
+      <RowStack>
+        <NotoSansJP variant="h5" fontWeight={500}>
+          楽曲
+        </NotoSansJP>
+        <NotoSansJP variant="h6">
+          <ExtLink href="https://youtu.be/zBmGISSf6X8?si=elOWJ__GyKZD75RW">
+            「The Marks」2ouDNS
+          </ExtLink>
+        </NotoSansJP>
+      </RowStack>
+
+      <Divider textAlign="center" flexItem>
+        <NotoSansJP variant="body1">3Dモデル</NotoSansJP>
+      </Divider>
+
+      <RowStack>
+        <NotoSansJP variant="h5" fontWeight={500}>
+          初音ミク
+        </NotoSansJP>
+        <NotoSansJP variant="h6">
+          <ExtLink href="https://www.deviantart.com/piloulabaka/art/MMD-YYB-Racing-Miku-2022-model-DL-905665700">
+            YYB & Pilou La Baka
+          </ExtLink>
+        </NotoSansJP>
+      </RowStack>
+
+      <RowStack>
+        <NotoSansJP variant="h5" fontWeight={500}>
+          ステージ
+        </NotoSansJP>
+        <NotoSansJP variant="h6">
+          <ExtLink href="https://www.unrealengine.com/marketplace/ja/product/awardstage">
+            Filmingbox
+          </ExtLink>
+        </NotoSansJP>
+      </RowStack>
+
+      <RowStack>
+        <NotoSansJP variant="h5" fontWeight={500}>
+          ハート
+        </NotoSansJP>
+        <NotoSansJP variant="h6">
+          <ExtLink href="https://market.pmnd.rs/model/heart">
+            Kay Lousberg
+          </ExtLink>
+        </NotoSansJP>
+      </RowStack>
+
+      <Divider textAlign="center" flexItem>
+        <NotoSansJP variant="body1">アニメーション</NotoSansJP>
+      </Divider>
+
+      <RowStack>
+        <NotoSansJP variant="h5" fontWeight={500}>
+          ダンス
+        </NotoSansJP>
+        <NotoSansJP variant="h6">
+          <ExtLink href="https://www.mixamo.com/">Maximo</ExtLink>
+        </NotoSansJP>
+      </RowStack>
+
+      <RowStack>
+        <NotoSansJP variant="h5" fontWeight={500}>
+          まばたき
+        </NotoSansJP>
+        <NotoSansJP variant="h6">
+          <ExtLink href="https://bowlroll.net/file/251160">さの</ExtLink>
+        </NotoSansJP>
+      </RowStack>
+    </Stack>
+  );
+}
+
+function LinkCollection(): JSX.Element {
+  return (
+    <Stack spacing={2}>
+      <RowStack>
+        <NotoSansJP variant="h5" fontWeight={500}>
+          初音ミク「マジカルミライ 2024」
+          <br />
+          プログラミングコンテスト
+        </NotoSansJP>
+        <NotoSansJP variant="h6">
+          <ExtLink href="https://magicalmirai.com/2024/procon/">
+            ホームページ
+          </ExtLink>
+        </NotoSansJP>
+      </RowStack>
+
+      <RowStack>
+        <NotoSansJP variant="h5" fontWeight={500}>
+          制作者
+        </NotoSansJP>
+        <NotoSansJP variant="h6">
+          <ExtLink href="https://www.youtube.com/@otokotoba/">奈奈之</ExtLink>
+        </NotoSansJP>
+      </RowStack>
+
+      <RowStack>
+        <NotoSansJP variant="h5" fontWeight={500}>
+          サポートサーバー
+        </NotoSansJP>
+        <NotoSansJP variant="h6">
+          <ExtLink href="https://discord.gg/Waut2JEgNS">Discord</ExtLink>
+        </NotoSansJP>
+      </RowStack>
+    </Stack>
   );
 }

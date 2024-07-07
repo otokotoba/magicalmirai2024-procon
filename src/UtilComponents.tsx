@@ -1,4 +1,7 @@
-import { Stack, StackProps } from '@mui/material';
+import {
+  Link,
+  LinkProps,
+} from '@mui/material';
 
 export function RowStack(props: StackProps): JSX.Element {
   return (
@@ -7,3 +10,8 @@ export function RowStack(props: StackProps): JSX.Element {
     </Stack>
   );
 }
+
+export function ExtLink(props: LinkProps): JSX.Element {
+  return <Link {...props} target="_blank" rel="noopener noreferrer"></Link>;
+}
+
