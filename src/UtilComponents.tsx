@@ -9,7 +9,12 @@ import {
 
 export function RowStack(props: StackProps): JSX.Element {
   return (
-    <Stack direction="row" justifyContent="space-between" alignItems="center">
+    <Stack
+      direction="row"
+      justifyContent="space-between"
+      alignItems="center"
+      spacing={1}
+    >
       {props.children}
     </Stack>
   );

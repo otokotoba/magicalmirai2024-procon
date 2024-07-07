@@ -31,8 +31,13 @@ const pages = [
   { title: 'クレジット', component: <Credits key={2} /> },
   { title: 'リンク', component: <LinkCollection key={3} /> },
 ];
+const mobilePages = [{ title: '注意', component: <Caution key={4} /> }];
 
-export function Description(): JSX.Element {
+export function Description({
+  isMobile = false,
+}: {
+  isMobile?: boolean;
+}): JSX.Element {
   const [showDiscription, toggleShowDescription] = useAppStore(state => [
     state.showDescription,
     state.toggleShowDescription,
@@ -61,6 +66,16 @@ export function Description(): JSX.Element {
     setHeight(`${content.current.getBoundingClientRect().height}px`);
   }, []);
 
+  useEffect(() => {
+    if (
+      isMobile &&
+      pages[pages.length - 1].title !==
+        mobilePages[mobilePages.length - 1].title
+    ) {
+      pages.push(...mobilePages);
+    }
+  }, [isMobile]);
+
   return (
     showDiscription && (
       <>
@@ -71,6 +86,7 @@ export function Description(): JSX.Element {
             backgroundColor: 'transparent',
           }}
         />
+
         <Box
           sx={{
             position: 'absolute',
@@ -78,7 +94,8 @@ export function Description(): JSX.Element {
             left: 0,
             width: '100%',
             height: '100%',
-            backgroundColor: 'rgba(0, 0, 0, 0.75)',
+            px: 2,
+            backgroundColor: isMobile ? 'transparent' : 'rgba(0, 0, 0, 0.75)',
             zIndex: theme.zIndex.modal,
           }}
         >
@@ -140,7 +157,7 @@ export function Description(): JSX.Element {
                   </ButtonGroup>
 
                   <Button
-                    disabled={page < pages.length - 1}
+                    disabled={page < pages.length - 1 || isMobile}
                     variant="contained"
                     disableElevation
                     onClick={handleStart}
@@ -331,5 +348,15 @@ function LinkCollection(): JSX.Element {
         </NotoSansJP>
       </RowStack>
     </Stack>
+  );
+}
+
+function Caution(): JSX.Element {
+  return (
+    <NotoSansJP variant="h6">
+      操作性やスペックの都合上、
+      スマートフォンやタブレットではプレイできません。
+      パソコンから再度アクセスしてください。
+    </NotoSansJP>
   );
 }
