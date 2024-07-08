@@ -41,7 +41,7 @@ type GLTFResult = GLTF & {
   };
 };
 
-const PATH = '/stage.glb';
+const PATH = '/models/stage.glb';
 
 useGLTF.preload(PATH);
 

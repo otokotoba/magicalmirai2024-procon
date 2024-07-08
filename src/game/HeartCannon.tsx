@@ -23,7 +23,7 @@ type GLTFResult = GLTF & {
   };
 };
 
-const PATH = '/speaker.glb';
+const PATH = '/models/speaker.glb';
 
 useGLTF.preload(PATH);
 

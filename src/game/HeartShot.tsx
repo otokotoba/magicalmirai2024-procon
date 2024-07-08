@@ -34,7 +34,7 @@ export type HeartShotProps = {
   target?: RefObject<RapierRigidBody>;
 };
 
-const PATH = '/heart.gltf';
+const PATH = '/models/heart.gltf';
 
 useGLTF.preload(PATH);
 
