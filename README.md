@@ -1,36 +1,63 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+This app was developed as a work for [this programming contest](https://magicalmirai.com/2024/procon/).
 
-## Getting Started
+## 審査員向けの詳細
 
-First, run the development server:
+### 開発環境
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- Ubuntu 22.04.4
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- Node.js 20.14.0
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- TypeScript 5.4.5
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+### 主な使用ライブラリ
 
-## Learn More
+- [`Next.js`](https://github.com/vercel/next.js)
 
-To learn more about Next.js, take a look at the following resources:
+  [`React`](https://github.com/facebook/react)フレームワーク
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- [`Material UI`](https://github.com/mui/material-ui)
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+  React用コンポーネントライブラリ
 
-## Deploy on Vercel
+- [`Zustand`](https://github.com/pmndrs/zustand)
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+  React用状態管理ライブラリ
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+- [`React Three Fiber`](https://github.com/pmndrs/react-three-fiber)
+
+  [`Three.js`](https://github.com/mrdoob/three.js/)用Reactレンダラー
+
+- [`React Three Drei`](https://github.com/pmndrs/drei)
+
+  `React Three Fiber`用拡張ライブラリ
+
+- [`gltfjsx`](https://github.com/pmndrs/gltfjsx)
+
+  元のGLTFを、軽量化したGLTFと`React Three Fiber`用JSXに変換するツール
+
+- [`React Three Rapier`](https://github.com/pmndrs/react-three-rapier)
+
+  物理エンジン[`Rapier`](https://github.com/dimforge/rapier)の`React Three Fiber`用ラッパー
+
+### プロジェクト構成
+
+- [`Next.js`の`App Router`版の構成](https://nextjs.org/docs/getting-started/project-structure)に従っています。
+
+- `/src/text-alive`内のエントリーファイル : `Player.tsx`
+
+- `/src/game`内のエントリーファイル : `Game.tsx`
+
+### 補足
+
+- `/public`内のGLTFは`gltfjsx`で軽量化し、[`useLoader`](https://docs.pmnd.rs/react-three-fiber/api/hooks#pre-loading-assets)のプリロード機能を使い、読み込み時間を短縮しています。
+
+- `/public`内のフォントデータは、[`Facetype.js`](https://gero3.github.io/facetype.js/)で歌詞に必要な文字だけに絞ってサブセット化を行い、読み込み時間を短縮しています。
+
+- MMDモデル内の物理演算には、`/public/libs`内の[`ammo.js`](https://threejs.org/docs/#examples/en/animations/MMDPhysics)を使用しています。
+
+- SNSでの共有を想定して、OGPに対応しています。
+
+- 操作性やスペックの都合上、スマートフォンやタブレットではプレイできません。
+
+- パソコンでもスペックによっては多少動作が重くなることがあります。
