@@ -15,7 +15,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: TITLE,
     description: DESCRIPTION,
-    url: URL,
+    url: process.env.URL ?? URL,
     siteName: TITLE,
     type: 'website',
   },
