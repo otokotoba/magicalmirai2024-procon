@@ -289,6 +289,17 @@ function Credits(): JSX.Element {
         </NotoSansJP>
       </RowStack>
 
+      <RowStack>
+        <NotoSansJP variant="h5" fontWeight={500}>
+          スピーカー
+        </NotoSansJP>
+        <NotoSansJP variant="h6">
+          <ExtLink href="https://assetstore.unity.com/packages/3d/props/electronics/hq-acoustic-system-41886">
+            Next Level 3D
+          </ExtLink>
+        </NotoSansJP>
+      </RowStack>
+
       <Divider textAlign="center" flexItem>
         <NotoSansJP variant="body1">アニメーション</NotoSansJP>
       </Divider>
