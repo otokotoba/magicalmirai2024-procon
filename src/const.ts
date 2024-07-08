@@ -23,12 +23,5 @@ export const KEYMAP: KeyboardControlsEntry[] = [
 ];
 
 export const SNACKBAR_DURATION = 4000;
-export const X_TEXT = encodeURIComponent(
-  [
-    `「${TITLE}」をプレイしました！`,
-    '',
-    URL,
-    '',
-    '#初音ミク #マジカルミライ2024 #TextAlive',
-  ].join('\n')
-);
+
+export const HASHTAG = '#初音ミク #マジカルミライ2024 #TextAlive';

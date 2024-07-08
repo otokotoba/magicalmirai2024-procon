@@ -12,14 +12,15 @@ import {
   useTheme,
 } from '@mui/material';
 import { toBlob } from 'html-to-image';
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 import { notoSansJP, teko } from '../app/font';
 import {
+  HASHTAG,
   SCORE_ON_GOOD,
   SCORE_ON_PERFECT,
   SNACKBAR_DURATION,
-  X_TEXT,
+  TITLE,
 } from '../const';
 import { useAppStore } from '../stores/AppStoreProvider';
 import { ExtLink, RowStack, XIcon } from '../UtilComponents';
@@ -105,6 +106,16 @@ export function Result(): JSX.Element {
 
     setTimeout(() => setMessage(''), SNACKBAR_DURATION);
   }, [theme.subPalette]);
+
+  const text = useMemo(
+    () =>
+      encodeURIComponent(
+        [`「${TITLE}」をプレイしました！`, '', location.href, '', HASHTAG].join(
+          '\n'
+        )
+      ),
+    []
+  );
 
   return (
     <Dialog
@@ -193,7 +204,7 @@ export function Result(): JSX.Element {
             }}
           />
 
-          <ExtLink href={`https://twitter.com/intent/tweet?text=${X_TEXT}`}>
+          <ExtLink href={`https://twitter.com/intent/tweet?text=${text}`}>
             <Button
               variant="contained"
               disableElevation
