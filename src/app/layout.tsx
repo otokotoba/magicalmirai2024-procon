@@ -6,12 +6,26 @@ import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
 
-import { DESCRIPTION, TITLE } from '../const';
+import { DESCRIPTION, TITLE, URL } from '../const';
 import { AppStoreProvider } from '../stores/AppStoreProvider';
 
 export const metadata: Metadata = {
   title: TITLE,
   description: DESCRIPTION,
+  openGraph: {
+    title: TITLE,
+    description: DESCRIPTION,
+    url: URL,
+    siteName: TITLE,
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: TITLE,
+    description: DESCRIPTION,
+    site: '@otokotoba_music',
+    creator: '@otokotoba_music',
+  },
 };
 
 export default function RootLayout({

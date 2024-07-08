@@ -1,8 +1,10 @@
 import { KeyboardControlsEntry } from '@react-three/drei';
 
-export const TITLE = '初音ミクと相思相愛？';
+export const TITLE = '初音ミクと相思相愛';
 export const DESCRIPTION =
-  '初音ミクに愛を伝えるリズムゲーム×リリックアプリ | 初音ミク「マジカルミライ 2024」プログラミングコンテスト 応募作品';
+  '初音ミクと愛を伝え合うリズムゲーム×リリックアプリ | 初音ミク「マジカルミライ 2024」プログラミングコンテスト 応募作品';
+export const URL =
+  'https://magicalmirai2024-procon-otokotobas-projects.vercel.app/';
 
 export const SONG_URL = 'https://piapro.jp/t/xEA7/20240202002556';
 export const TIME_DELTA = 50;
@@ -25,7 +27,7 @@ export const X_TEXT = encodeURIComponent(
   [
     `「${TITLE}」をプレイしました！`,
     '',
-    'https://magicalmirai2024-procon-otokotobas-projects.vercel.app/',
+    URL,
     '',
     '#初音ミク #マジカルミライ2024 #TextAlive',
   ].join('\n')
