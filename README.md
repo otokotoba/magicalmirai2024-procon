@@ -1,6 +1,6 @@
 This app was developed as a work for [this programming contest](https://magicalmirai.com/2024/procon/).
 
-## 審査員向けの詳細
+## 審査員の方向けの情報
 
 ### 開発環境
 
@@ -34,7 +34,7 @@ This app was developed as a work for [this programming contest](https://magicalm
 
 - [`gltfjsx`](https://github.com/pmndrs/gltfjsx)
 
-  元のGLTFを、軽量化したGLTFと`React Three Fiber`用JSXに変換するツール
+  元のGLTFを軽量化し、`React Three Fiber`用JSXに変換するツール
 
 - [`React Three Rapier`](https://github.com/pmndrs/react-three-rapier)
 
@@ -50,7 +50,7 @@ This app was developed as a work for [this programming contest](https://magicalm
 
 ### 補足
 
-- `/public`内のGLTFは`gltfjsx`で軽量化し、[`useLoader`](https://docs.pmnd.rs/react-three-fiber/api/hooks#pre-loading-assets)のプリロード機能を使い、読み込み時間を短縮しています。
+- `/public/models`内のGLTFは`gltfjsx`で軽量化し、[`useLoader`](https://docs.pmnd.rs/react-three-fiber/api/hooks#pre-loading-assets)のプリロード機能を使い、読み込み時間を短縮しています。
 
 - `/public`内のフォントデータは、[`Facetype.js`](https://gero3.github.io/facetype.js/)で歌詞に必要な文字だけに絞ってサブセット化を行い、読み込み時間を短縮しています。
 
@@ -60,4 +60,14 @@ This app was developed as a work for [this programming contest](https://magicalm
 
 - 操作性やスペックの都合上、スマートフォンやタブレットではプレイできません。
 
-- パソコンでもスペックによっては多少動作が重くなることがあります。
+- 以下のパソコンのChrome上で動作することを確認しました。ただし、スペックによっては多少動作が重くなることがあります。
+
+- MacBook Pro(M1 / 16GB)
+
+- MacBook Air(M2)
+
+- Windows(Intel Core i7 14世代 / 64GB)
+
+- Windows(Intel Core i5 12世代 / 8GB)
+
+- Windows(Intel Core i7 10世代)
