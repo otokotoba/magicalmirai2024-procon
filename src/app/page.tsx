@@ -6,8 +6,9 @@ import {
   Stack,
   ThemeProvider,
   Typography,
+  useTheme,
 } from '@mui/material';
-import { useEffect, useState } from 'react';
+import { PropsWithChildren, useEffect, useState } from 'react';
 
 import { theme } from './theme';
 import { Description } from '../game/Description';
@@ -30,30 +31,22 @@ export default function Home(): JSX.Element {
           margin: 0,
           alignItems: 'center',
           height: '100vh',
+          overflow: 'hidden',
         }}
       >
         {loading ? (
-          <Box
-            sx={{
-              height: '100%',
-              p: 2,
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
-              background: `linear-gradient(to right bottom, ${theme.subPalette.primary} 0%, ${theme.subPalette.secondary} 100%)`,
-            }}
-          >
-            {isMobile ? (
-              <Description isMobile={isMobile} />
-            ) : (
-              <Stack spacing={1} sx={{ width: '100%', maxWidth: '800px' }}>
-                <Typography variant="caption" alignSelf="center">
-                  読み込み中
-                </Typography>
-                <LinearProgress />
-              </Stack>
-            )}
-          </Box>
+          <Container>
+            <Stack spacing={1} sx={{ width: '100%', maxWidth: '800px' }}>
+              <Typography variant="caption" alignSelf="center">
+                読み込み中
+              </Typography>
+              <LinearProgress />
+            </Stack>
+          </Container>
+        ) : isMobile ? (
+          <Container>
+            <Description isMobile={isMobile} />
+          </Container>
         ) : (
           <>
             <Player />
@@ -62,5 +55,24 @@ export default function Home(): JSX.Element {
         )}
       </Box>
     </ThemeProvider>
+  );
+}
+
+function Container(props: PropsWithChildren): JSX.Element {
+  const theme = useTheme();
+
+  return (
+    <Box
+      sx={{
+        height: '100%',
+        p: 2,
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        background: `linear-gradient(to right bottom, ${theme.subPalette.primary} 0%, ${theme.subPalette.secondary} 100%)`,
+      }}
+    >
+      {props.children}
+    </Box>
   );
 }
