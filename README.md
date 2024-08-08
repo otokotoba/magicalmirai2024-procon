@@ -62,12 +62,12 @@ This app was developed as a work for [this programming contest](https://magicalm
 
 - 以下のパソコンのChrome上で動作することを確認しました。ただし、スペックによっては多少動作が重くなることがあります。
 
-- MacBook Pro(M1 / 16GB)
+  - MacBook Pro(M1 / 16GB)
 
-- MacBook Air(M2)
+  - MacBook Air(M2)
 
-- Windows(Intel Core i7 14世代 / 64GB)
+  - Windows(Intel Core i7 14世代 / 64GB)
 
-- Windows(Intel Core i5 12世代 / 8GB)
+  - Windows(Intel Core i5 12世代 / 8GB)
 
-- Windows(Intel Core i7 10世代)
+  - Windows(Intel Core i7 10世代)
