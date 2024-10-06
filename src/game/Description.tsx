@@ -346,16 +346,7 @@ function LinkCollection(): JSX.Element {
           制作者
         </NotoSansJP>
         <NotoSansJP variant="h6">
-          <ExtLink href="https://www.youtube.com/@otokotoba/">奈奈之</ExtLink>
-        </NotoSansJP>
-      </RowStack>
-
-      <RowStack>
-        <NotoSansJP variant="h5" fontWeight={500}>
-          サポートサーバー
-        </NotoSansJP>
-        <NotoSansJP variant="h6">
-          <ExtLink href="https://discord.gg/Waut2JEgNS">Discord</ExtLink>
+          <ExtLink href="https://www.youtube.com/@otokotoba/">音言葉</ExtLink>
         </NotoSansJP>
       </RowStack>
     </Stack>
